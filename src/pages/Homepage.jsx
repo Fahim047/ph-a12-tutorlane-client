@@ -1,4 +1,5 @@
 import Banner from '../components/Banner/Banner';
+import FeedbackSection from '../components/sections/FeedbackSection';
 import PopularClasses from '../components/sections/PopularClassesSection';
 
 const Homepage = () => {
@@ -6,6 +7,7 @@ const Homepage = () => {
 		<div className="w-full">
 			<Banner />
 			<PopularClasses />
+			<FeedbackSection />
 		</div>
 	);
 };
