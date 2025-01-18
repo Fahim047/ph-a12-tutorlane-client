@@ -9,12 +9,11 @@ export default {
 				padding: '1rem',
 			},
 			colors: {
-				primary: '#4F46E5',
-				secondary: '#16A34A',
-				accent: '#F97316',
-				neutral: '#F3F4F6',
-				darkText: '#1F2937',
-				subtleText: '#6B7280',
+				primary: '#16A34A', // Vibrant green
+				secondary: '#0F5132', // Deep forest green
+				neutral: '#E9F5EC', // Soft light green-neutral background
+				darkText: '#1B4332', // Dark green for text
+				subtleText: '#52796F', // Muted green-gray for subtle text
 			},
 		},
 	},

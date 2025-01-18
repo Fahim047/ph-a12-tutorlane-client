@@ -1,9 +1,8 @@
 import { HomeIcon, RefreshCw } from 'lucide-react';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ErrorPage = ({
-	code = '404',
+	code = 404,
 	message = 'Page not found',
 	description = "Sorry, we couldn't find the page you're looking for.",
 }) => {

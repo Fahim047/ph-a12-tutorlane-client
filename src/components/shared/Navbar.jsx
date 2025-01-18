@@ -1,32 +1,15 @@
-import {
-	BookOpen,
-	ChevronDown,
-	LogOut,
-	Menu,
-	Moon,
-	Settings,
-	Sun,
-	User,
-	X,
-} from 'lucide-react';
+import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../hooks'; // Assuming useTheme hook is available for theme switching
 
 const Navbar = () => {
 	const { darkMode, setDarkMode } = useTheme();
-	const [isOpen, setIsOpen] = useState(false);
-	const [isProfileOpen, setIsProfileOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
-	const toggleMenu = () => setIsOpen(!isOpen);
-	const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
-
-	const toggleTheme = () => {
-		setDarkMode((prev) => !prev);
-	};
-
-	const isAuthenticated = true;
-	const userRole = 'student';
+	const isAuthenticated = true; // Mock authentication status
+	const user = { name: 'John Doe', avatar: 'https://via.placeholder.com/40' }; // Mock user data
 
 	const navItems = [
 		{ label: 'Home', to: '/' },
@@ -34,54 +17,52 @@ const Navbar = () => {
 		{ label: 'Teach', to: '/teach' },
 	];
 
-	const profileMenuItems = [
-		{ label: 'Profile', icon: User, to: '/profile' },
-		{ label: 'Dashboard', icon: BookOpen, to: `/${userRole}-dashboard` },
-		{ label: 'Settings', icon: Settings, to: '/settings' },
-		{ label: 'Logout', icon: LogOut, to: '/logout' },
-	];
+	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+	const toggleProfileDropdown = () =>
+		setIsProfileDropdownOpen(!isProfileDropdownOpen);
+
+	const toggleTheme = () => {
+		setDarkMode((prev) => !prev);
+	};
+
+	const linkClasses = (isActive) =>
+		`px-4 py-2 rounded text-sm font-medium transition-colors ${
+			isActive
+				? 'text-primary bg-gray-800'
+				: 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary'
+		}`;
 
 	return (
-		<nav className="bg-white dark:bg-gray-900 shadow-md fixed w-full top-0 z-50">
+		<nav
+			className={`fixed w-full top-0 z-50 shadow-md ${
+				darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+			}`}
+		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between h-16 items-center">
-					{/* Logo - Left */}
-					<div className="flex items-center flex-shrink-0">
-						<NavLink
-							to="/"
-							className="text-2xl font-bold text-primary dark:text-secondary"
-						>
-							TutorLane
-						</NavLink>
-					</div>
+					{/* Logo and Website Name */}
+					<NavLink
+						to="/"
+						className="text-2xl font-bold text-primary transition"
+					>
+						TutorLane
+					</NavLink>
 
-					{/* Desktop Navigation - Center */}
-					<div className="hidden md:flex md:items-center md:justify-center flex-1 px-8">
-						<div className="flex space-x-8">
-							{navItems.map((item) => (
-								<NavLink
-									key={item.label}
-									to={item.to}
-									className={({ isActive }) =>
-										`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-											isActive
-												? 'text-primary dark:text-secondary bg-neutral dark:bg-gray-800'
-												: 'text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary'
-										}`
-									}
-								>
-									{item.label}
-								</NavLink>
-							))}
-						</div>
-					</div>
-
-					{/* Account Options and Theme Switcher - Right */}
-					<div className="hidden md:flex md:items-center space-x-4">
-						{/* Theme Switcher */}
+					{/* Desktop Navigation */}
+					<div className="hidden md:flex md:space-x-8 items-center">
+						{navItems.map((item) => (
+							<NavLink
+								key={item.label}
+								to={item.to}
+								className={({ isActive }) => linkClasses(isActive)}
+							>
+								{item.label}
+							</NavLink>
+						))}
+						{/* Theme Switcher (Desktop) */}
 						<button
 							onClick={toggleTheme}
-							className="p-2 rounded-full text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary focus:outline-none"
+							className="flex items-center p-2 rounded-full text-gray-500 hover:text-primary focus:outline-none"
 						>
 							{darkMode ? (
 								<Sun className="w-6 h-6" />
@@ -89,116 +70,139 @@ const Navbar = () => {
 								<Moon className="w-6 h-6" />
 							)}
 						</button>
-
-						{/* Account Options */}
-						{isAuthenticated ? (
-							<div className="relative">
-								<button
-									onClick={toggleProfile}
-									className="flex items-center space-x-1 text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary px-3 py-2 rounded-md text-sm font-medium"
-								>
-									<span>Account</span>
-									<ChevronDown className="h-4 w-4" />
-								</button>
-
-								{isProfileOpen && (
-									<div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-										<div className="py-1">
-											{profileMenuItems.map((item) => (
-												<NavLink
-													key={item.label}
-													to={item.to}
-													className={({ isActive }) =>
-														`flex items-center px-4 py-2 text-sm ${
-															isActive
-																? 'text-primary dark:text-secondary bg-neutral dark:bg-gray-700'
-																: 'text-darkText dark:text-gray-300 hover:bg-neutral dark:hover:bg-gray-700'
-														}`
-													}
-													onClick={() => setIsProfileOpen(false)}
-												>
-													<item.icon className="h-4 w-4 mr-2" />
-													{item.label}
-												</NavLink>
-											))}
-										</div>
-									</div>
-								)}
-							</div>
-						) : (
+						{!isAuthenticated ? (
 							<NavLink
 								to="/login"
-								className={({ isActive }) =>
-									`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-										isActive
-											? 'bg-primary/90 text-white'
-											: 'bg-primary text-white hover:bg-primary/90'
-									}`
-								}
+								className="px-6 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
 							>
 								Sign In
 							</NavLink>
+						) : (
+							<div className="relative">
+								{/* Profile Picture */}
+								<button
+									className="flex items-center space-x-2"
+									onClick={toggleProfileDropdown}
+								>
+									<img
+										src={user.avatar}
+										alt="User Avatar"
+										className="w-8 h-8 rounded-full border-2 border-primary"
+									/>
+									<ChevronDown className="w-4 h-4" />
+								</button>
+
+								{/* Profile Dropdown */}
+								{isProfileDropdownOpen && (
+									<div
+										className={`absolute right-0 mt-2 w-48 bg-${
+											darkMode ? 'gray-800' : 'white'
+										} rounded shadow-lg`}
+									>
+										<div
+											className={`p-4 text-sm font-medium border-b border-${
+												darkMode ? 'gray-600' : 'gray-300'
+											}`}
+										>
+											{user.name}
+										</div>
+										<NavLink
+											to="/dashboard"
+											className={`block px-4 py-2 text-sm hover:bg-${
+												darkMode ? 'gray-700' : 'gray-100'
+											}`}
+										>
+											Dashboard
+										</NavLink>
+										<button
+											className={`block w-full text-left px-4 py-2 text-sm hover:bg-${
+												darkMode ? 'gray-700' : 'gray-100'
+											}`}
+										>
+											Logout
+										</button>
+									</div>
+								)}
+							</div>
 						)}
 					</div>
 
-					{/* Mobile menu button */}
-					<div className="md:hidden flex items-center">
-						<button
-							onClick={toggleMenu}
-							className="inline-flex items-center justify-center p-2 rounded-md text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary focus:outline-none"
-						>
-							{isOpen ? (
-								<X className="h-6 w-6" />
-							) : (
-								<Menu className="h-6 w-6" />
-							)}
-						</button>
-					</div>
+					{/* Mobile Menu Button */}
+					<button className="md:hidden flex items-center" onClick={toggleMenu}>
+						{isMenuOpen ? (
+							<X className="w-6 h-6" />
+						) : (
+							<Menu className="w-6 h-6" />
+						)}
+					</button>
 				</div>
 			</div>
 
-			{/* Mobile menu */}
-			{isOpen && (
-				<div className="md:hidden">
+			{/* Mobile Menu */}
+			{isMenuOpen && (
+				<div
+					className={`md:hidden bg-${
+						darkMode ? 'gray-900 text-white' : 'white text-darkText'
+					}`}
+				>
 					<div className="px-2 pt-2 pb-3 space-y-1">
 						{navItems.map((item) => (
 							<NavLink
 								key={item.label}
 								to={item.to}
-								className={({ isActive }) =>
-									`block px-3 py-2 rounded-md text-base font-medium ${
-										isActive
-											? 'text-primary dark:text-secondary bg-neutral dark:bg-gray-800'
-											: 'text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary hover:bg-neutral dark:hover:bg-gray-800'
-									}`
-								}
-								onClick={() => setIsOpen(false)}
+								className={({ isActive }) => linkClasses(isActive)}
+								onClick={toggleMenu}
 							>
 								{item.label}
 							</NavLink>
 						))}
-						{isAuthenticated && (
-							<div className="border-t border-neutral dark:border-gray-700 pt-2">
-								{profileMenuItems.map((item) => (
-									<NavLink
-										key={item.label}
-										to={item.to}
-										className={({ isActive }) =>
-											`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-												isActive
-													? 'text-primary dark:text-secondary bg-neutral dark:bg-gray-800'
-													: 'text-darkText dark:text-gray-300 hover:text-primary dark:hover:text-secondary hover:bg-neutral dark:hover:bg-gray-800'
-											}`
-										}
-										onClick={() => setIsOpen(false)}
-									>
-										<item.icon className="h-4 w-4 mr-2" />
-										{item.label}
-									</NavLink>
-								))}
-							</div>
-						)}
+						{/* Theme Switcher (Mobile) */}
+						<div className="flex justify-center items-center py-2">
+							<button
+								onClick={toggleTheme}
+								className="p-2 rounded-full text-gray-500 hover:text-primary"
+							>
+								{darkMode ? (
+									<Sun className="w-6 h-6" />
+								) : (
+									<Moon className="w-6 h-6" />
+								)}
+							</button>
+						</div>
 					</div>
+					{!isAuthenticated ? (
+						<NavLink
+							to="/login"
+							className="block px-4 py-2 bg-primary text-white rounded text-center"
+							onClick={toggleMenu}
+						>
+							Sign In
+						</NavLink>
+					) : (
+						<div className="px-2 pt-2 pb-3 border-t border-gray-600">
+							<div className="flex items-center space-x-3 px-3 py-2">
+								<img
+									src={user.avatar}
+									alt="User Avatar"
+									className="w-8 h-8 rounded-full border-2 border-primary"
+								/>
+								<span className="text-sm font-medium">{user.name}</span>
+							</div>
+							<NavLink
+								to="/dashboard"
+								className="block px-3 py-2 text-sm hover:bg-gray-800"
+								onClick={toggleMenu}
+							>
+								Dashboard
+							</NavLink>
+							<button
+								className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-800"
+								onClick={toggleMenu}
+							>
+								Logout
+							</button>
+						</div>
+					)}
 				</div>
 			)}
 		</nav>
