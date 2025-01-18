@@ -9,7 +9,7 @@ const Navbar = () => {
 	const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
 	const isAuthenticated = true; // Mock authentication status
-	const user = { name: 'John Doe', avatar: 'https://via.placeholder.com/40' }; // Mock user data
+	const user = { name: 'John Doe', avatar: 'https://placehold.co/24x24' }; // Mock user data
 
 	const navItems = [
 		{ label: 'Home', to: '/' },
@@ -87,6 +87,7 @@ const Navbar = () => {
 									<img
 										src={user.avatar}
 										alt="User Avatar"
+										referrerPolicy="no-referrer"
 										className="w-8 h-8 rounded-full border-2 border-primary"
 									/>
 									<ChevronDown className="w-4 h-4" />
