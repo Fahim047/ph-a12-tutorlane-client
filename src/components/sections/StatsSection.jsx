@@ -10,7 +10,7 @@ const StatsSection = ({ stats }) => {
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
 					{/* Total Users */}
 					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
-						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
+						<h3 className="text-2xl font-semibold text-primary">
 							{totalUsers}
 						</h3>
 						<p className="text-darkText dark:text-subtleText mt-2">
@@ -20,7 +20,7 @@ const StatsSection = ({ stats }) => {
 
 					{/* Total Classes */}
 					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
-						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
+						<h3 className="text-2xl font-semibold text-primary">
 							{totalClasses}
 						</h3>
 						<p className="text-darkText dark:text-subtleText mt-2">
@@ -30,7 +30,7 @@ const StatsSection = ({ stats }) => {
 
 					{/* Total Enrollments */}
 					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
-						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
+						<h3 className="text-2xl font-semibold text-primary">
 							{totalEnrollments}
 						</h3>
 						<p className="text-darkText dark:text-subtleText mt-2">

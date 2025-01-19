@@ -1,35 +1,29 @@
 import { HomeIcon, RefreshCw } from 'lucide-react';
-import { useNavigate, useRouteError } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const ErrorPage = () => {
+const NotFoundPage = ({
+	code = 404,
+	message = 'Page not found',
+	description = "Sorry, we couldn't find the page you're looking for.",
+}) => {
 	const navigate = useNavigate();
-	const error = useRouteError();
-
-	// Extract error information
-	const errorCode = error?.status || 500;
-	const errorMessage =
-		error?.statusText || error?.message || 'An unexpected error occurred.';
-	const errorDescription =
-		error?.data?.message ||
-		"Sorry, something went wrong. We're working to fix it.";
 
 	return (
-		<div className="w-[100vw] min-h-screen bg-white flex flex-col items-center justify-center p-4">
-			{/* Error Code Display */}
+		<div className="w-[100vw] min-h-screen bg-white dark:bg-gray-900 flex flex-col items-center justify-center p-4">
+			{/* Error Animation Container */}
 			<div className="mb-8 relative">
-				<div className="text-8xl md:text-9xl font-bold text-darkText animate-bounce">
-					{errorCode}
+				<div className="text-8xl md:text-9xl font-bold text-darkText dark:text-primary animate-bounce">
+					{code}
 				</div>
 				<div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
 			</div>
 
 			{/* Error Message */}
-			<h1 className="text-2xl md:text-3xl font-semibold text-darkText mb-2 text-center">
-				{errorMessage}
+			<h1 className="text-2xl md:text-3xl font-semibold text-darkText dark:text-neutral mb-2 text-center">
+				{message}
 			</h1>
-			<p className="text-subtleText mb-8 text-center max-w-md">
-				{errorDescription}
-			</p>
+			<p className="text-subtleText mb-8 text-center max-w-md">{description}</p>
 
 			{/* Action Buttons */}
 			<div className="flex flex-col sm:flex-row gap-4">
@@ -51,5 +45,10 @@ const ErrorPage = () => {
 		</div>
 	);
 };
+NotFoundPage.propTypes = {
+	code: PropTypes.number,
+	message: PropTypes.string,
+	description: PropTypes.string,
+};
 
-export default ErrorPage;
+export default NotFoundPage;

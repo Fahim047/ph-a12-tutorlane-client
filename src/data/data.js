@@ -105,3 +105,45 @@ export const stats = {
 	totalClasses: 567,
 	totalEnrollments: 890,
 };
+export const allClasses = [
+	{
+		id: 1,
+		title: 'Advanced JavaScript',
+		name: 'John Doe',
+		image: 'https://placehold.co/300x200',
+		price: 50,
+		description:
+			'Deep dive into JavaScript concepts such as closures, promises, and async/await.',
+		totalEnrollment: 120,
+	},
+	{
+		id: 2,
+		title: 'Python for Beginners',
+		name: 'Jane Smith',
+		image: 'https://placehold.co/300x200',
+		price: 40,
+		description:
+			'Learn Python programming from scratch and build real-world projects.',
+		totalEnrollment: 85,
+	},
+	{
+		id: 3,
+		title: 'React Masterclass',
+		name: 'Alice Brown',
+		image: 'https://placehold.co/300x200',
+		price: 70,
+		description:
+			'Master React.js and build dynamic, responsive web applications.',
+		totalEnrollment: 150,
+	},
+	{
+		id: 3,
+		title: 'React Masterclass',
+		name: 'Alice Brown',
+		image: 'https://placehold.co/300x200',
+		price: 70,
+		description:
+			'Master React.js and build dynamic, responsive web applications.',
+		totalEnrollment: 150,
+	},
+];
