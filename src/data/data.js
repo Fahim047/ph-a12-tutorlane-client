@@ -100,3 +100,8 @@ export const feedbacks = [
 		title: 'Public Speaking Mastery',
 	},
 ];
+export const stats = {
+	totalUsers: 1234,
+	totalClasses: 567,
+	totalEnrollments: 890,
+};

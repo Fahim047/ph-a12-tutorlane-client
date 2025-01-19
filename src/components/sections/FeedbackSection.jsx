@@ -1,10 +1,10 @@
+import PropTypes from 'prop-types';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { feedbacks } from '../../data/data';
-const FeedbackSection = () => {
+const FeedbackSection = ({ feedbacks }) => {
 	return (
 		<section className="w-full bg-neutral dark:bg-gray-800 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,7 +41,7 @@ const FeedbackSection = () => {
 								{/* Feedback Content */}
 								<div className="text-center">
 									<p className="text-subtleText italic mb-4">
-										"{feedback.text}"
+										{`"${feedback.text}"`}
 									</p>
 									<h3 className="text-lg font-bold text-darkText">
 										{feedback.name}
@@ -56,5 +56,16 @@ const FeedbackSection = () => {
 		</section>
 	);
 };
+FeedbackSection.propTypes = {
+	feedbacks: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			name: PropTypes.string.isRequired,
+			title: PropTypes.string.isRequired,
+			text: PropTypes.string.isRequired,
+			image: PropTypes.string.isRequired,
+		})
+	),
+}.isRequired;
 
 export default FeedbackSection;

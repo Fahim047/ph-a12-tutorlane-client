@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { A11y, Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { classes } from '../../data/data';
-const PopularClasses = () => {
+const PopularClasses = ({ classes }) => {
 	return (
 		<section className="w-full bg-neutral dark:bg-gray-800 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,6 +64,17 @@ const PopularClasses = () => {
 			</div>
 		</section>
 	);
+};
+PopularClasses.propTypes = {
+	classes: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			image: PropTypes.string.isRequired,
+			enrollments: PropTypes.number.isRequired,
+		})
+	).isRequired,
 };
 
 export default PopularClasses;
