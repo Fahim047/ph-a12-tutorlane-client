@@ -1,6 +1,6 @@
 import Banner from '../components/Banner/Banner';
 import AchievementsSection from '../components/sections/AchievementsSection';
-import FAQSection from '../components/sections/FaqSection';
+import FAQSection from '../components/sections/FAQSection';
 import FeedbackSection from '../components/sections/FeedbackSection';
 import HowItWorksSection from '../components/sections/HowItWorks';
 import InspireTeachersSection from '../components/sections/InspireTeachersSection';
