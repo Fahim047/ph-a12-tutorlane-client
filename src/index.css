@@ -15,5 +15,5 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 .dark {
-	@apply bg-gray-800 text-white;
+	@apply bg-gray-900 text-white;
 }

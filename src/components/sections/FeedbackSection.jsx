@@ -6,9 +6,9 @@ import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 const FeedbackSection = ({ feedbacks }) => {
 	return (
-		<section className="w-full bg-neutral dark:bg-gray-800 py-12">
+		<section className="w-full bg-neutral dark:bg-gray-900 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<h2 className="text-3xl font-bold text-darkText dark:text-white text-center mb-8">
+				<h2 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
 					What Teachers Are Saying
 				</h2>
 				<Swiper

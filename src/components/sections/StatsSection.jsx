@@ -4,12 +4,12 @@ const StatsSection = ({ stats }) => {
 	const { totalUsers, totalClasses, totalEnrollments } = stats;
 
 	return (
-		<section className="w-full py-12 bg-neutral dark:bg-gray-800">
+		<section className="w-full py-12 bg-neutral dark:bg-gray-900">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 				{/* Left: Stats Cards */}
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
 					{/* Total Users */}
-					<div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
 							{totalUsers}
 						</h3>
@@ -19,7 +19,7 @@ const StatsSection = ({ stats }) => {
 					</div>
 
 					{/* Total Classes */}
-					<div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
 							{totalClasses}
 						</h3>
@@ -29,7 +29,7 @@ const StatsSection = ({ stats }) => {
 					</div>
 
 					{/* Total Enrollments */}
-					<div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary dark:text-accent">
 							{totalEnrollments}
 						</h3>
