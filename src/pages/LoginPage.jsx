@@ -1,14 +1,23 @@
 import { ChevronLeft, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import GoogleIcon from '../assets/google.png';
 import Illustration from '../assets/undraw_authentication.svg';
+import { useAuth } from '../hooks';
 const LoginPage = () => {
+	const { user, handleSignInWithGoogle, handleSignInWithEmail } = useAuth();
+	const navigate = useNavigate();
+	const [error, setError] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
 	});
+	if (user) {
+		return <Navigate to="/" />;
+	}
 
 	const handleChange = (e) => {
 		setFormData({
@@ -17,15 +26,35 @@ const LoginPage = () => {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleEmailLogin = async (e) => {
 		e.preventDefault();
-		// Add your login logic here
-		console.log('Login submitted:', formData);
+		setError('');
+		setIsLoading(true);
+
+		try {
+			const { email, password } = formData;
+			await handleSignInWithEmail(email, password);
+			toast.success('Login successful');
+			navigate(location?.state || '/');
+		} catch (err) {
+			setError(
+				'Failed to log in. Please check your credentials and try again.'
+			);
+			console.error(err);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
-	const handleGoogleLogin = () => {
+	const handleGoogleLogin = async () => {
 		// Add Google Login logic here
 		console.log('Google login clicked');
+		try {
+			await handleSignInWithGoogle();
+			navigate('/');
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -67,7 +96,7 @@ const LoginPage = () => {
 							Please enter your details to sign in
 						</p>
 					</div>
-					<form onSubmit={handleSubmit} className="space-y-4">
+					<form onSubmit={handleEmailLogin} className="space-y-4">
 						{/* Email Input */}
 						<div className="space-y-2">
 							<label
@@ -111,6 +140,8 @@ const LoginPage = () => {
 									placeholder="Enter your password"
 									required
 								/>
+								{/* Error message */}
+								{error && <p className="text-red-500 mt-1">{error}</p>}
 								<button
 									type="button"
 									onClick={() => setShowPassword(!showPassword)}
@@ -140,7 +171,7 @@ const LoginPage = () => {
 							type="submit"
 							className="w-full py-2.5 px-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
 						>
-							Sign in
+							{isLoading ? 'Signing in...' : 'Sign In'}
 						</button>
 						{/* Divider */}
 						<div className="flex items-center my-6">

@@ -1,27 +1,70 @@
-import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
+import {
+	ChevronLeft,
+	Eye,
+	EyeOff,
+	Link2,
+	Lock,
+	Mail,
+	User,
+} from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import GoogleIcon from '../assets/google.png';
 import Illustration from '../assets/undraw_authentication.svg';
+import { useAuth } from '../hooks';
+import { validatePassword } from '../utils/validatePassword';
 const RegisterPage = () => {
+	const { user, createUser, handleUpdateProfile, handleLogout } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
+		photoURL: '',
 		password: '',
+		confirmPassword: '',
 	});
+	const [error, setError] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useNavigate();
+
+	if (user) {
+		return <Navigate to="/" />;
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setError('');
+		setIsLoading(true);
+
+		const { email, password, confirmPassword, name, photoURL } = formData;
+		const passwordErrors = validatePassword(password, confirmPassword);
+		if (passwordErrors.length > 0) {
+			setError(`${passwordErrors.join(', ')}`);
+			setIsLoading(false);
+			return;
+		}
+
+		try {
+			await createUser(email, password);
+			await handleUpdateProfile({ displayName: name, photoURL });
+			await handleLogout();
+			toast.success('Registration successful.');
+			navigate('/login');
+		} catch (err) {
+			setError('Something went wrong!');
+			console.error('Registration error:', err);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const handleChange = (e) => {
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,
 		});
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// Add your register logic here
-		console.log('Register submitted:', formData);
 	};
 
 	return (
@@ -50,9 +93,10 @@ const RegisterPage = () => {
 				<div className="w-full max-w-md">
 					<Link
 						to="/"
-						className="inline-block px-3 py-2 text-neutral bg-darkText rounded-md mb-8"
+						className="w-fit flex gap-1 items-center text-neutral rounded-md mb-8 hover:text-subtleText transition-colors"
 					>
-						Return Home
+						<ChevronLeft size={24} />
+						Home
 					</Link>
 					<div className="text-center mb-8">
 						<h1 className="text-3xl font-bold text-primary mb-2">
@@ -109,6 +153,28 @@ const RegisterPage = () => {
 								/>
 							</div>
 						</div>
+						{/* Photo Input */}
+						<div className="space-y-2">
+							<label
+								htmlFor="photoURL"
+								className="block text-sm font-medium text-darkText"
+							>
+								Avatar URL
+							</label>
+							<div className="relative">
+								<Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-subtleText" />
+								<input
+									type="url"
+									id="photoURL"
+									name="photoURL"
+									value={formData.photoURL}
+									onChange={handleChange}
+									className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-neutral focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-darkText bg-white"
+									placeholder="Enter your avatar URL"
+									required
+								/>
+							</div>
+						</div>
 
 						{/* Password Input */}
 						<div className="space-y-2">
@@ -143,13 +209,49 @@ const RegisterPage = () => {
 								</button>
 							</div>
 						</div>
+						{/* Confirm Password Input */}
+						<div className="space-y-2">
+							<label
+								htmlFor="confirmPassword"
+								className="block text-sm font-medium text-darkText"
+							>
+								Confirm Password
+							</label>
+							<div className="relative">
+								<Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-subtleText" />
+								<input
+									type={showConfirmPassword ? 'text' : 'password'}
+									id="confirmPassword"
+									name="confirmPassword"
+									value={formData.confirmPassword}
+									onChange={handleChange}
+									className="w-full pl-10 pr-12 py-2.5 rounded-lg border border-neutral focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-darkText bg-white"
+									placeholder="Enter your password"
+									required
+								/>
+								<button
+									type="button"
+									onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+									className="absolute right-3 top-1/2 -translate-y-1/2"
+								>
+									{showConfirmPassword ? (
+										<EyeOff className="h-5 w-5 text-subtleText hover:text-darkText" />
+									) : (
+										<Eye className="h-5 w-5 text-subtleText hover:text-darkText" />
+									)}
+								</button>
+							</div>
+						</div>
+
+						{/* Error Message */}
+						{error && <p className="text-red-500 mt-2">{error}</p>}
 
 						{/* Submit Button */}
 						<button
 							type="submit"
 							className="w-full py-2.5 px-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
 						>
-							Sign Up
+							{isLoading ? 'Signing up...' : 'Sign Up'}
 						</button>
 
 						{/* Divider */}

@@ -1,15 +1,17 @@
 import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useTheme } from '../../hooks'; // Assuming useTheme hook is available for theme switching
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useAuth, useTheme } from '../../hooks'; // Assuming useTheme hook is available for theme switching
 
 const Navbar = () => {
+	const { user, handleLogout } = useAuth();
 	const { darkMode, setDarkMode } = useTheme();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+	const navigate = useNavigate();
 
-	const isAuthenticated = true; // Mock authentication status
-	const user = { name: 'John Doe', avatar: 'https://placehold.co/24x24' }; // Mock user data
+	const isAuthenticated = user !== null;
 
 	const navItems = [
 		{ label: 'Home', to: '/' },
@@ -31,6 +33,11 @@ const Navbar = () => {
 				? 'text-primary bg-gray-800'
 				: 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary'
 		}`;
+	const logout = async () => {
+		await handleLogout();
+		navigate('/');
+		toast.success('Logged out successfully.');
+	};
 
 	return (
 		<nav
@@ -85,7 +92,7 @@ const Navbar = () => {
 									onClick={toggleProfileDropdown}
 								>
 									<img
-										src={user.avatar}
+										src={user?.photoURL}
 										alt="User Avatar"
 										referrerPolicy="no-referrer"
 										className="w-8 h-8 rounded-full border-2 border-primary"
@@ -105,7 +112,7 @@ const Navbar = () => {
 												darkMode ? 'gray-600' : 'gray-300'
 											}`}
 										>
-											{user.name}
+											{user?.displayName}
 										</div>
 										<NavLink
 											to="/dashboard"
@@ -116,6 +123,7 @@ const Navbar = () => {
 											Dashboard
 										</NavLink>
 										<button
+											onClick={logout}
 											className={`block w-full text-left px-4 py-2 text-sm hover:bg-${
 												darkMode ? 'gray-700' : 'gray-100'
 											}`}
@@ -183,11 +191,11 @@ const Navbar = () => {
 						<div className="px-2 pt-2 pb-3 border-t border-gray-600">
 							<div className="flex items-center space-x-3 px-3 py-2">
 								<img
-									src={user.avatar}
+									src={user?.photoURL}
 									alt="User Avatar"
 									className="w-8 h-8 rounded-full border-2 border-primary"
 								/>
-								<span className="text-sm font-medium">{user.name}</span>
+								<span className="text-sm font-medium">{user.displayName}</span>
 							</div>
 							<NavLink
 								to="/dashboard"
@@ -198,7 +206,10 @@ const Navbar = () => {
 							</NavLink>
 							<button
 								className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-800"
-								onClick={toggleMenu}
+								onClick={() => {
+									toggleMenu();
+									logout();
+								}}
 							>
 								Logout
 							</button>

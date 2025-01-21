@@ -1,3 +1,3 @@
+import useAuth from './useAuth';
 import useTheme from './useTheme';
-
-export { useTheme };
+export { useAuth, useTheme };
