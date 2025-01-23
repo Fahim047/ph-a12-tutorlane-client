@@ -8,10 +8,7 @@ import PopularClasses from '../components/sections/PopularClassesSection';
 import StatsSection from '../components/sections/StatsSection';
 import StudentTestimonialsSection from '../components/sections/StudentsTestimonials';
 import { classes, feedbacks, stats } from '../data/data';
-import { useAuth } from '../hooks';
 const Homepage = () => {
-	const { user } = useAuth();
-	console.log(user);
 	return (
 		<div className="w-full">
 			<Banner />

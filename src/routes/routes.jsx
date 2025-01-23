@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import DashboardLayout from '../layouts/Dashboard';
 import MainLayout from '../layouts/MainLayout';
 import About from '../pages/About';
 import AllClasses from '../pages/AllClasses';
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
 	{
 		path: '/signup',
 		element: <RegisterPage />,
+	},
+	{
+		path: '/dashboard',
+		element: <DashboardLayout />,
+		children: [],
 	},
 ]);
 

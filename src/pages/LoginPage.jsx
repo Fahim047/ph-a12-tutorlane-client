@@ -47,10 +47,23 @@ const LoginPage = () => {
 	};
 
 	const handleGoogleLogin = async () => {
-		// Add Google Login logic here
 		console.log('Google login clicked');
 		try {
-			await handleSignInWithGoogle();
+			const { user } = await handleSignInWithGoogle();
+			const { email, photoURL, displayName } = user;
+			const response = await fetch(
+				`${import.meta.env.VITE_API_BASE_URL}/users`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email, photoURL, name: displayName }),
+				}
+			);
+			const data = await response.json();
+			console.log(data);
+			toast.success('Login successful');
 			navigate('/');
 		} catch (err) {
 			console.error(err);

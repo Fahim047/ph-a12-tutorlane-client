@@ -10,7 +10,6 @@ import {
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import GoogleIcon from '../assets/google.png';
 import Illustration from '../assets/undraw_authentication.svg';
 import { useAuth } from '../hooks';
 import { validatePassword } from '../utils/validatePassword';
@@ -49,6 +48,17 @@ const RegisterPage = () => {
 		try {
 			await createUser(email, password);
 			await handleUpdateProfile({ displayName: name, photoURL });
+			const response = await fetch(
+				`${import.meta.env.VITE_API_BASE_URL}/users`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email, photoURL, name }),
+				}
+			);
+			console.log(response);
 			await handleLogout();
 			toast.success('Registration successful.');
 			navigate('/login');
@@ -255,22 +265,22 @@ const RegisterPage = () => {
 						</button>
 
 						{/* Divider */}
-						<div className="flex items-center my-6">
+						{/* <div className="flex items-center my-6">
 							<div className="flex-grow h-px bg-neutral"></div>
 							<span className="px-4 text-sm text-subtleText">
 								or continue with
 							</span>
 							<div className="flex-grow h-px bg-neutral"></div>
-						</div>
+						</div> */}
 
 						{/* Google Button */}
-						<button
+						{/* <button
 							type="button"
 							className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-neutral text-neutral rounded-lg hover:bg-neutral hover:text-darkText transition-colors"
 						>
 							<img src={GoogleIcon} alt="Google Logo" className="size-6" />
 							<span>Continue with Google</span>
-						</button>
+						</button> */}
 
 						{/* Login link */}
 						<p className="text-center text-sm text-subtleText">
