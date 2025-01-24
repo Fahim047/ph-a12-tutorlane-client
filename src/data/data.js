@@ -147,3 +147,38 @@ export const allClasses = [
 		totalEnrollment: 150,
 	},
 ];
+
+export const enrolledClasses = [
+	{
+		id: '1',
+		title: 'Introduction to Python',
+		teacherName: 'John Doe',
+		image: 'https://placehold.co/400x300',
+	},
+	{
+		id: '2',
+		title: 'Web Development Basics',
+		teacherName: 'Jane Smith',
+		image: 'https://placehold.co/400x300',
+	},
+	{
+		id: '3',
+		title: 'Data Science Fundamentals',
+		teacherName: 'Alan Turing',
+		image: 'https://placehold.co/400x300',
+	},
+];
+export const assignments = [
+	{
+		id: '1',
+		title: 'Assignment 1',
+		description: 'Solve problems 1-10 in the textbook.',
+		deadline: '2025-01-31',
+	},
+	{
+		id: '2',
+		title: 'Assignment 2',
+		description: 'Write an essay on environmental conservation.',
+		deadline: '2025-02-10',
+	},
+];

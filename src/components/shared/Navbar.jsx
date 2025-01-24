@@ -1,8 +1,9 @@
-import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth, useTheme } from '../../hooks'; // Assuming useTheme hook is available for theme switching
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Navbar = () => {
 	const { user, handleLogout } = useAuth();
@@ -67,16 +68,7 @@ const Navbar = () => {
 							</NavLink>
 						))}
 						{/* Theme Switcher (Desktop) */}
-						<button
-							onClick={toggleTheme}
-							className="flex items-center p-2 rounded-full text-gray-500 hover:text-primary focus:outline-none"
-						>
-							{darkMode ? (
-								<Sun className="w-6 h-6" />
-							) : (
-								<Moon className="w-6 h-6" />
-							)}
-						</button>
+						<ThemeSwitcher darkMode={darkMode} toggleTheme={toggleTheme} />
 						{!isAuthenticated ? (
 							<NavLink
 								to="/login"
@@ -136,14 +128,21 @@ const Navbar = () => {
 						)}
 					</div>
 
-					{/* Mobile Menu Button */}
-					<button className="md:hidden flex items-center" onClick={toggleMenu}>
-						{isMenuOpen ? (
-							<X className="w-6 h-6" />
-						) : (
-							<Menu className="w-6 h-6" />
-						)}
-					</button>
+					<div className="md:hidden flex items-center gap-2">
+						{/* Theme Switcher*/}
+						<ThemeSwitcher darkMode={darkMode} toggleTheme={toggleTheme} />
+						{/* Mobile Menu Button */}
+						<button
+							className="md:hidden flex items-center"
+							onClick={toggleMenu}
+						>
+							{isMenuOpen ? (
+								<X className="w-6 h-6" />
+							) : (
+								<Menu className="w-6 h-6" />
+							)}
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -154,7 +153,7 @@ const Navbar = () => {
 						darkMode ? 'gray-900 text-white' : 'white text-darkText'
 					}`}
 				>
-					<div className="px-2 pt-2 pb-3 space-y-1">
+					<div className="flex flex-col px-2 pt-2 pb-3 space-y-1">
 						{navItems.map((item) => (
 							<NavLink
 								key={item.label}
@@ -165,19 +164,6 @@ const Navbar = () => {
 								{item.label}
 							</NavLink>
 						))}
-						{/* Theme Switcher (Mobile) */}
-						<div className="flex justify-center items-center py-2">
-							<button
-								onClick={toggleTheme}
-								className="p-2 rounded-full text-gray-500 hover:text-primary"
-							>
-								{darkMode ? (
-									<Sun className="w-6 h-6" />
-								) : (
-									<Moon className="w-6 h-6" />
-								)}
-							</button>
-						</div>
 					</div>
 					{!isAuthenticated ? (
 						<NavLink

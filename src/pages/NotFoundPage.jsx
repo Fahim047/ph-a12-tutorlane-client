@@ -10,7 +10,7 @@ const NotFoundPage = ({
 	const navigate = useNavigate();
 
 	return (
-		<div className="w-[100vw] min-h-screen bg-white dark:bg-gray-900 flex flex-col items-center justify-center p-4">
+		<div className="w-full min-h-screen bg-white dark:bg-gray-900 flex flex-col items-center justify-center p-4">
 			{/* Error Animation Container */}
 			<div className="mb-8 relative">
 				<div className="text-8xl md:text-9xl font-bold text-darkText dark:text-primary animate-bounce">
