@@ -3,11 +3,6 @@ import DashboardLayout from '../layouts/Dashboard';
 import MainLayout from '../layouts/MainLayout';
 import About from '../pages/About';
 import AllClasses from '../pages/AllClasses';
-import ErrorPage from '../pages/ErrorPage';
-import Homepage from '../pages/Homepage';
-import LoginPage from '../pages/LoginPage';
-import NotFoundPage from '../pages/NotFoundPage';
-import RegisterPage from '../pages/RegisterPage';
 import AdminAllClasses from '../pages/dashboard/admin/AdminAllClasses';
 import AdminProfile from '../pages/dashboard/admin/AdminProfile';
 import TeacherRequests from '../pages/dashboard/admin/TeacherRequests';
@@ -19,6 +14,12 @@ import AddClass from '../pages/dashboard/teacher/AddClass';
 import ClassDetails from '../pages/dashboard/teacher/ClassDetails';
 import MyClasses from '../pages/dashboard/teacher/MyClasses';
 import TeacherProfile from '../pages/dashboard/teacher/TeacherProfile';
+import ErrorPage from '../pages/ErrorPage';
+import Homepage from '../pages/Homepage';
+import LoginPage from '../pages/LoginPage';
+import NotFoundPage from '../pages/NotFoundPage';
+import RegisterPage from '../pages/RegisterPage';
+import TeachPage from '../pages/TeachPage';
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
 			{
 				path: '/classes',
 				element: <AllClasses />,
+			},
+			{
+				path: '/teach',
+				element: <TeachPage />,
 			},
 			{
 				path: '/about',
