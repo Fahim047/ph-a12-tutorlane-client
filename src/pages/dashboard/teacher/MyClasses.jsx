@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MyClasses = () => {
+	const navigate = useNavigate();
 	// Static mock data for classes
 	const [classes, setClasses] = useState([
 		{
@@ -28,7 +30,6 @@ const MyClasses = () => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [selectedClass, setSelectedClass] = useState(null);
 
-	// Handlers
 	const handleUpdate = (cls) => {
 		console.log('Updating class:', cls);
 	};
@@ -48,6 +49,7 @@ const MyClasses = () => {
 		if (cls.status === 'approved') {
 			console.log('Redirecting to details page for:', cls);
 		}
+		navigate(`/dashboard/teacher/my-classes/${cls.id}`);
 	};
 
 	return (
