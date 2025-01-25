@@ -25,7 +25,7 @@ const DashboardLayout = () => {
 			{ name: 'Profile', path: 'teacher/profile' },
 		],
 	};
-	const links = sidebarLinks[user?.role] || sidebarLinks['student'];
+	const links = sidebarLinks[user?.role] || sidebarLinks['admin'];
 
 	return (
 		<div className={`flex min-h-screen ${darkMode ? 'dark' : ''}`}>
