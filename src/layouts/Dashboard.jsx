@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router-dom';
+import LoadingComponent from '../components/shared/LoadingComponent';
 import Sidebar from '../components/shared/Sidebar';
 import ThemeSwitcher from '../components/shared/ThemeSwitcher';
-import { useAuth, useTheme } from '../hooks';
+import { useAuth, useTheme, useUserRole } from '../hooks';
 
 const DashboardLayout = () => {
 	const { user } = useAuth();
+	const { role, isLoading, error } = useUserRole();
 	const { darkMode, setDarkMode } = useTheme();
 
-	// Sidebar links based on user role
 	const sidebarLinks = {
 		student: [
 			{ name: 'My Enrolled Classes', path: 'student/my-enroll-classes' },
@@ -25,7 +26,22 @@ const DashboardLayout = () => {
 			{ name: 'Profile', path: 'teacher/profile' },
 		],
 	};
-	const links = sidebarLinks[user?.role] || sidebarLinks['teacher'];
+
+	const links = role ? sidebarLinks[role] : [];
+
+	if (isLoading) {
+		return <LoadingComponent />;
+	}
+
+	if (error) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<p className="text-red-500">
+					Error: {error.message || 'Something went wrong!'}
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className={`flex min-h-screen ${darkMode ? 'dark' : ''}`}>
@@ -37,7 +53,7 @@ const DashboardLayout = () => {
 				{/* Top Bar */}
 				<header className="flex items-center justify-between p-4 shadow bg-white dark:bg-gray-800">
 					<h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-						Welcome, {user?.name || 'User'}!
+						Welcome, {user?.displayName || 'User'}!
 					</h1>
 					{/* Theme Switcher */}
 					<ThemeSwitcher

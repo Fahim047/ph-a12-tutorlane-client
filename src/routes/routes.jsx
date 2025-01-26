@@ -20,6 +20,7 @@ import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import TeachPage from '../pages/TeachPage';
+import PrivateRoutes from '../routes/PrivateRoutes';
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -59,7 +60,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/dashboard',
-		element: <DashboardLayout />,
+		element: (
+			<PrivateRoutes>
+				<DashboardLayout />
+			</PrivateRoutes>
+		),
 		errorElement: (
 			<div className="flex flex-col items-center justify-center">
 				<p className="text-red-500 text-[10rem]">500</p>
