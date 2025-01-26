@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import axiosPublic from '../api/axios';
+import { getUserByEmail } from '../utils/queries';
 
 const TeachPage = () => {
 	const [user, setUser] = useState({
 		name: 'John Doe',
 		image: 'https://placehold.co/150',
 		email: 'john.doe@example.com',
-		role: 'user', // possible roles: user, teacher
+		role: 'student', // possible roles: user, teacher
 		status: '', // possible statuses: '', 'pending', 'approved', 'rejected'
-	});
-	const [formData, setFormData] = useState({
-		experience: 'beginner',
-		title: '',
-		category: 'Web Development',
 	});
 	const [message, setMessage] = useState('');
 
@@ -23,28 +22,71 @@ const TeachPage = () => {
 		'Cybersecurity',
 	];
 
-	// Handle input change
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({ ...prev, [name]: value }));
-	};
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: {
+			experience: 'beginner',
+			title: '',
+			category: 'Web Development',
+		},
+	});
+	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				const email = 'fahimulislam58@gmail.com';
+				const fetchedUser = await getUserByEmail(email);
+				console.log(fetchedUser);
+				setUser(fetchedUser);
+			} catch (err) {
+				console.error('Error fetching user:', err);
+				setMessage('Failed to load user data.');
+			}
+		};
+		fetchUser();
+	}, []);
 
-	// Submit form handler
-	const handleSubmit = () => {
+	const onSubmit = async (data) => {
 		if (user.role === 'teacher') {
 			setMessage('You are already a teacher.');
 			return;
 		}
-
-		console.log('Form submitted:', formData);
-		setUser((prev) => ({ ...prev, status: 'pending' }));
-		setMessage('Your request has been submitted for review.');
+		try {
+			const response = await axiosPublic.post('/teachers/request', {
+				...data,
+				userId: '67911099b2428ab348756172',
+			});
+			setMessage('Your request has been submitted for review.');
+			reset();
+		} catch (error) {
+			setMessage(
+				`Error: ${error.response?.data?.message || 'Failed to submit request.'}`
+			);
+		}
 	};
 
-	// Request to apply again
-	const handleRequestAgain = () => {
-		setUser((prev) => ({ ...prev, status: 'pending' }));
-		setMessage('Your request has been resubmitted for review.');
+	const handleRequestAgain = async () => {
+		try {
+			const response = await axios.post('/teacher/request', {
+				name: user.name,
+				email: user.email,
+				image: user.image,
+				experience: 'beginner',
+				title: '',
+				category: 'Web Development',
+			});
+			setUser((prev) => ({ ...prev, status: 'pending' }));
+			setMessage('Your request has been resubmitted for review.');
+		} catch (error) {
+			setMessage(
+				`Error: ${
+					error.response?.data?.message || 'Failed to resubmit request.'
+				}`
+			);
+		}
 	};
 
 	// Display based on status
@@ -106,10 +148,7 @@ const TeachPage = () => {
 				</div>
 				<div>
 					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							handleSubmit();
-						}}
+						onSubmit={handleSubmit(onSubmit)}
 						className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow"
 					>
 						<div className="mb-4">
@@ -121,9 +160,7 @@ const TeachPage = () => {
 							</label>
 							<select
 								id="experience"
-								name="experience"
-								value={formData.experience}
-								onChange={handleInputChange}
+								{...register('experience')}
 								className="w-full border-gray-300 rounded-lg px-4 py-2"
 							>
 								<option value="beginner">Beginner</option>
@@ -140,12 +177,14 @@ const TeachPage = () => {
 							</label>
 							<input
 								id="title"
-								name="title"
-								type="text"
-								value={formData.title}
-								onChange={handleInputChange}
+								{...register('title', { required: 'Title is required' })}
 								className="w-full border-gray-300 rounded-lg px-4 py-2"
 							/>
+							{errors.title && (
+								<p className="text-red-500 text-sm mt-1">
+									{errors.title.message}
+								</p>
+							)}
 						</div>
 						<div className="mb-4">
 							<label
@@ -156,9 +195,7 @@ const TeachPage = () => {
 							</label>
 							<select
 								id="category"
-								name="category"
-								value={formData.category}
-								onChange={handleInputChange}
+								{...register('category')}
 								className="w-full border-gray-300 rounded-lg px-4 py-2"
 							>
 								{categories.map((cat) => (
