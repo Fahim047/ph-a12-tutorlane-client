@@ -1,4 +1,5 @@
 import axiosPublic from '../api/axios';
+import { asyncHandler } from './asyncHandler';
 
 export const getUserByEmail = async (email) => {
 	try {
@@ -9,3 +10,7 @@ export const getUserByEmail = async (email) => {
 		throw err;
 	}
 };
+export const getTeacherRequests = asyncHandler(async () => {
+	const response = await axiosPublic.get('/admin/teacher-requests');
+	return response.data;
+});

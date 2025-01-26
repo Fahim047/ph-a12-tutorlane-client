@@ -1,38 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
-const requests = [
-	{
-		id: '1',
-		image: 'https://via.placeholder.com/150',
-		name: 'Alice Johnson',
-		experience: 5,
-		title: 'Advanced Math',
-		category: 'Mathematics',
-		status: 'pending',
-	},
-	{
-		id: '2',
-		image: 'https://via.placeholder.com/150',
-		name: 'Bob Smith',
-		experience: 3,
-		title: 'Creative Writing',
-		category: 'Literature',
-		status: 'accepted',
-	},
-	{
-		id: '3',
-		image: 'https://via.placeholder.com/150',
-		name: 'Charlie Brown',
-		experience: 7,
-		title: 'Physics Fundamentals',
-		category: 'Science',
-		status: 'rejected',
-	},
-];
+import { getTeacherRequests } from '../../../utils/queries';
 
 const handleApprove = (id) => console.log(`Approved request with ID: ${id}`);
 const handleReject = (id) => console.log(`Rejected request with ID: ${id}`);
 
 const TeacherRequestPage = () => {
+	const {
+		data: requests,
+		isPending,
+		error,
+	} = useQuery({
+		queryFn: getTeacherRequests,
+		queryKey: ['teacherRequests'],
+	});
+	if (isPending) {
+		return <h1>Loading...</h1>;
+	}
+	if (error) {
+		return <h1>Something went wrong...</h1>;
+	}
 	return (
 		<div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
@@ -73,13 +60,13 @@ const TeacherRequestPage = () => {
 							>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
 									<img
-										src={request.image}
-										alt={request.name}
+										src={request.user?.photoURL}
+										alt={request.user?.name}
 										className="w-12 h-12 rounded-full"
 									/>
 								</td>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
-									{request.name}
+									{request.user?.name}
 								</td>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
 									{request.experience} years
