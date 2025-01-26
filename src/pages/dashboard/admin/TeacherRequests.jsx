@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import { useAxios } from '../../../hooks';
 import { getTeacherRequests } from '../../../utils/queries';
 
-const handleApprove = (id) => console.log(`Approved request with ID: ${id}`);
-const handleReject = (id) => console.log(`Rejected request with ID: ${id}`);
-
 const TeacherRequestPage = () => {
+	const { axiosSecure } = useAxios();
 	const {
 		data: requests,
 		isPending,
@@ -14,6 +14,20 @@ const TeacherRequestPage = () => {
 		queryFn: getTeacherRequests,
 		queryKey: ['teacherRequests'],
 	});
+	const handleReject = async (id) => {
+		const response = await axiosSecure.patch(
+			`/admin/teacher-requests/${id}/reject`
+		);
+		const { message } = response.data;
+		toast.success(message);
+	};
+	const handleApprove = async (id) => {
+		const response = await axiosSecure.patch(
+			`/admin/teacher-requests/${id}/accept`
+		);
+		const { message } = response.data;
+		toast.success(message);
+	};
 	if (isPending) {
 		return <h1>Loading...</h1>;
 	}
@@ -55,18 +69,18 @@ const TeacherRequestPage = () => {
 					<tbody>
 						{requests.map((request) => (
 							<tr
-								key={request.id}
+								key={request._id}
 								className="hover:bg-gray-50 dark:hover:bg-gray-800"
 							>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
 									<img
-										src={request.user?.photoURL}
-										alt={request.user?.name}
+										src={request.image}
+										alt={request.name}
 										className="w-12 h-12 rounded-full"
 									/>
 								</td>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
-									{request.user?.name}
+									{request.name}
 								</td>
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
 									{request.experience} years
@@ -93,14 +107,14 @@ const TeacherRequestPage = () => {
 								<td className="px-4 py-2 border border-gray-300 dark:border-gray-700">
 									<div className="flex space-x-2">
 										<button
-											onClick={() => handleApprove(request.id)}
+											onClick={() => handleApprove(request._id)}
 											className="px-4 py-1 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 disabled:bg-gray-400"
 											disabled={request.status !== 'pending'}
 										>
 											Approve
 										</button>
 										<button
-											onClick={() => handleReject(request.id)}
+											onClick={() => handleReject(request._id)}
 											className="px-4 py-1 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 disabled:bg-gray-400"
 											disabled={request.status !== 'pending'}
 										>

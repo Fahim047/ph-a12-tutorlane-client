@@ -1,27 +1,23 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axiosPublic from '../api/axios';
-import { getUserByEmail } from '../utils/queries';
+import { useAuth, useAxios, useUserRole } from '../hooks';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const TeachPage = () => {
-	const [user, setUser] = useState({
-		name: 'John Doe',
-		image: 'https://placehold.co/150',
-		email: 'john.doe@example.com',
-		role: 'student', // possible roles: user, teacher
-		status: '', // possible statuses: '', 'pending', 'approved', 'rejected'
-	});
+	const { user, setUser } = useAuth();
+	const { axiosSecure } = useAxios();
+	const { role } = useUserRole();
 	const [message, setMessage] = useState('');
-
-	const categories = [
-		'Web Development',
-		'Digital Marketing',
-		'Graphic Design',
-		'Data Science',
-		'Cybersecurity',
-	];
-
+	const { data: request, isPending } = useQuery({
+		queryKey: ['teacherRequest', user?.email],
+		queryFn: asyncHandler(async () => {
+			const response = await axiosSecure.get(
+				`/users/teach-request?email=${user?.email}`
+			);
+			return response.data;
+		}),
+	});
 	const {
 		register,
 		handleSubmit,
@@ -34,32 +30,38 @@ const TeachPage = () => {
 			category: 'Web Development',
 		},
 	});
-	useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				const email = 'fahimulislam58@gmail.com';
-				const fetchedUser = await getUserByEmail(email);
-				console.log(fetchedUser);
-				setUser(fetchedUser);
-			} catch (err) {
-				console.error('Error fetching user:', err);
-				setMessage('Failed to load user data.');
-			}
-		};
-		fetchUser();
-	}, []);
+	if (isPending) {
+		return <h2>Loading request data...</h2>;
+	}
 
+	const categories = [
+		'Web Development',
+		'Digital Marketing',
+		'Graphic Design',
+		'Data Science',
+		'Cybersecurity',
+	];
 	const onSubmit = async (data) => {
-		if (user.role === 'teacher') {
+		if (role === 'teacher') {
 			setMessage('You are already a teacher.');
 			return;
 		}
 		try {
-			const response = await axiosPublic.post('/teachers/request', {
-				...data,
-				userId: '67911099b2428ab348756172',
-			});
-			setMessage('Your request has been submitted for review.');
+			if (request && request.status === 'rejected') {
+				await axiosSecure.patch('/users/teach-request', {
+					...data,
+					email: user.email,
+				});
+				setMessage('Your request has been resubmitted for review.');
+			} else {
+				await axiosSecure.post('/users/teach-request', {
+					...data,
+					name: user.displayName,
+					email: user.email,
+					image: user.photoURL,
+				});
+				setMessage('Your request has been submitted for review.');
+			}
 			reset();
 		} catch (error) {
 			setMessage(
@@ -68,29 +70,7 @@ const TeachPage = () => {
 		}
 	};
 
-	const handleRequestAgain = async () => {
-		try {
-			const response = await axios.post('/teacher/request', {
-				name: user.name,
-				email: user.email,
-				image: user.image,
-				experience: 'beginner',
-				title: '',
-				category: 'Web Development',
-			});
-			setUser((prev) => ({ ...prev, status: 'pending' }));
-			setMessage('Your request has been resubmitted for review.');
-		} catch (error) {
-			setMessage(
-				`Error: ${
-					error.response?.data?.message || 'Failed to resubmit request.'
-				}`
-			);
-		}
-	};
-
-	// Display based on status
-	if (user.role === 'teacher') {
+	if (role === 'teacher') {
 		return (
 			<div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
 				<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
@@ -103,7 +83,7 @@ const TeachPage = () => {
 		);
 	}
 
-	if (user.status === 'pending') {
+	if (request.status === 'pending') {
 		return (
 			<div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
 				<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
@@ -112,14 +92,6 @@ const TeachPage = () => {
 				<p className="text-gray-600 dark:text-gray-400 mb-6">
 					We will notify you once a decision is made.
 				</p>
-				{user.status === 'rejected' && (
-					<button
-						onClick={handleRequestAgain}
-						className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
-					>
-						Request to Apply Again
-					</button>
-				)}
 			</div>
 		);
 	}
@@ -134,11 +106,16 @@ const TeachPage = () => {
 					{message}
 				</div>
 			)}
+			{request.status === 'rejected' && (
+				<div className="mb-4 p-4 bg-red-100 text-red-500 font-bold">
+					Oops! Your previous request is rejected!
+				</div>
+			)}
 			<div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div className="flex flex-col items-center">
 					<img
-						src={user.image}
-						alt="User"
+						src={user.photoURL}
+						alt={user.displayName}
 						className="w-32 h-32 rounded-full mb-4"
 					/>
 					<h2 className="text-lg font-semibold text-gray-700 dark:text-white">
@@ -209,7 +186,9 @@ const TeachPage = () => {
 							type="submit"
 							className="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600"
 						>
-							Submit for Review
+							{request.status === 'rejected'
+								? 'Request again!'
+								: 'Submit for Review'}
 						</button>
 					</form>
 				</div>
