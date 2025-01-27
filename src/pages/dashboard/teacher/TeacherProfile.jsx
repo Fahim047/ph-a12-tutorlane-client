@@ -7,7 +7,7 @@ const mockUser = {
 	phone: '+8801521578288',
 };
 const TeacherProfile = () => {
-	return <UserProfile user={mockUser} />;
+	return <UserProfile />;
 };
 
 export default TeacherProfile;

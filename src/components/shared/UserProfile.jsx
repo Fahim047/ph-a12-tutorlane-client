@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
+import { useAuth } from '../../hooks';
 
-const UserProfile = ({ user }) => {
+const UserProfile = () => {
+	const { user } = useAuth();
 	return (
 		<div className="p-6 max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
 			{/* User Image */}
 			<div className="flex items-center justify-center mb-6">
 				<img
-					src={user.image}
-					alt={`${user.name}'s profile`}
+					src={user.photoURL}
+					alt={`${user.displayName}'s profile`}
 					className="w-24 h-24 rounded-full border-4 border-primary"
 				/>
 			</div>
@@ -16,7 +17,7 @@ const UserProfile = ({ user }) => {
 			<div className="text-center space-y-4">
 				<div>
 					<h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-						{user.name}
+						{user.displayName}
 					</h1>
 					<p className="text-gray-500 dark:text-gray-400 capitalize">
 						{user.role}
@@ -43,23 +44,13 @@ const UserProfile = ({ user }) => {
 							href={`tel:${user.phone}`}
 							className="text-primary hover:underline dark:text-primary-light"
 						>
-							{user.phone}
+							{user.phone || 'N/A'}
 						</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-};
-
-UserProfile.propTypes = {
-	user: PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		role: PropTypes.string.isRequired,
-		image: PropTypes.string.isRequired,
-		email: PropTypes.string.isRequired,
-		phone: PropTypes.string.isRequired,
-	}).isRequired,
 };
 
 export default UserProfile;
