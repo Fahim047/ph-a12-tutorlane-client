@@ -21,6 +21,8 @@ import NotFoundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import TeachPage from '../pages/TeachPage';
 import PrivateRoutes from '../routes/PrivateRoutes';
+import AdminRoutes from './AdminRoutes';
+import TeacherRoutes from './TeacherRoutes';
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -38,7 +40,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/teach',
-				element: <TeachPage />,
+				element: (
+					<PrivateRoutes>
+						<TeachPage />,
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/about',
@@ -88,38 +94,48 @@ const router = createBrowserRouter([
 
 			// Admin Routes
 			{
-				path: 'admin/teacher-requests',
-				element: <TeacherRequests />,
-			},
-			{
-				path: 'admin/users',
-				element: <Users />,
-			},
-			{
-				path: 'admin/all-classes',
-				element: <AdminAllClasses />,
-			},
-			{
-				path: 'admin/profile',
-				element: <AdminProfile />,
+				element: <AdminRoutes />,
+				children: [
+					{
+						path: 'admin/teacher-requests',
+						element: <TeacherRequests />,
+					},
+					{
+						path: 'admin/users',
+						element: <Users />,
+					},
+					{
+						path: 'admin/all-classes',
+						element: <AdminAllClasses />,
+					},
+					{
+						path: 'admin/profile',
+						element: <AdminProfile />,
+					},
+				],
 			},
 
 			// Teacher Routes
 			{
-				path: 'teacher/add-class',
-				element: <AddClass />,
-			},
-			{
-				path: 'teacher/my-classes',
-				element: <MyClasses />,
-			},
-			{
-				path: 'teacher/my-classes/:id',
-				element: <ClassDetails />,
-			},
-			{
-				path: 'teacher/profile',
-				element: <TeacherProfile />,
+				element: <TeacherRoutes />,
+				children: [
+					{
+						path: 'teacher/add-class',
+						element: <AddClass />,
+					},
+					{
+						path: 'teacher/my-classes',
+						element: <MyClasses />,
+					},
+					{
+						path: 'teacher/my-classes/:id',
+						element: <ClassDetails />,
+					},
+					{
+						path: 'teacher/profile',
+						element: <TeacherProfile />,
+					},
+				],
 			},
 			{
 				path: '*',

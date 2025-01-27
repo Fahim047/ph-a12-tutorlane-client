@@ -5,7 +5,7 @@ import { useAuth, useAxios, useUserRole } from '../hooks';
 import { asyncHandler } from '../utils/asyncHandler';
 
 const TeachPage = () => {
-	const { user, setUser } = useAuth();
+	const { user } = useAuth();
 	const { axiosSecure } = useAxios();
 	const { role } = useUserRole();
 	const [message, setMessage] = useState('');
@@ -97,7 +97,7 @@ const TeachPage = () => {
 	}
 
 	return (
-		<div className="mt-16 max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 min-h-screen">
+		<div className="mt-16 max-w-4xl mx-auto p-6 min-h-screen">
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
 				Teach on TutorLane
 			</h1>
