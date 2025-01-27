@@ -1,26 +1,33 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { useAuth, useAxios } from '../../../hooks';
 
 const AddClassPage = () => {
-	const user = {
-		name: 'John Doe',
-		email: 'johndoe@example.com',
-	};
+	const { axiosSecure } = useAxios();
+	const { user } = useAuth();
 
-	const [formData, setFormData] = useState({
-		title: '',
-		price: '',
-		description: '',
-		image: '',
-	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+	} = useForm();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log('Class added:', formData);
+	const onSubmit = async (data) => {
+		console.log('Class added:', data);
+		try {
+			const response = await axiosSecure.post('/teachers/classes', {
+				...data,
+				teacherName: user?.displayName,
+				teacherEmail: user?.email,
+			});
+			if (response.status === 201) {
+				toast.success(response.data?.message);
+				reset();
+			}
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -28,7 +35,7 @@ const AddClassPage = () => {
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
 				Add Class
 			</h1>
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				{/* Title */}
 				<div>
 					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
@@ -36,13 +43,76 @@ const AddClassPage = () => {
 					</label>
 					<input
 						type="text"
-						name="title"
-						value={formData.title}
-						onChange={handleChange}
+						{...register('title', { required: 'Title is required' })}
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
 						placeholder="Enter class title"
-						required
 					/>
+					{errors.title && (
+						<p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+					)}
+				</div>
+
+				{/* Description */}
+				<div>
+					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+						Description
+					</label>
+					<textarea
+						{...register('description', {
+							required: 'Description is required',
+							maxLength: {
+								value: 300,
+								message: 'Description cannot exceed 300 characters',
+							},
+						})}
+						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+						placeholder="Enter class description"
+					/>
+					{errors.description && (
+						<p className="text-red-500 text-sm mt-1">
+							{errors.description.message}
+						</p>
+					)}
+				</div>
+				{/* Image */}
+				<div>
+					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+						Thumbnail
+					</label>
+					<input
+						type="url"
+						{...register('thumbnail', {
+							required: 'Thumbnail image URL is required',
+							pattern: {
+								value: /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i,
+								message: 'Enter a valid image URL',
+							},
+						})}
+						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+						placeholder="Enter thumbnail image URL"
+					/>
+					{errors.image && (
+						<p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+					)}
+				</div>
+
+				{/* Price */}
+				<div>
+					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+						Price
+					</label>
+					<input
+						type="number"
+						{...register('price', {
+							required: 'Price is required',
+							min: { value: 5, message: 'Price must be at least 5' },
+						})}
+						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+						placeholder="Enter class price"
+					/>
+					{errors.price && (
+						<p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
+					)}
 				</div>
 
 				{/* Name (read-only) */}
@@ -52,7 +122,7 @@ const AddClassPage = () => {
 					</label>
 					<input
 						type="text"
-						value={user.name}
+						value={user.displayName}
 						readOnly
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
 					/>
@@ -68,53 +138,6 @@ const AddClassPage = () => {
 						value={user.email}
 						readOnly
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
-					/>
-				</div>
-
-				{/* Price */}
-				<div>
-					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-						Price
-					</label>
-					<input
-						type="number"
-						name="price"
-						value={formData.price}
-						onChange={handleChange}
-						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
-						placeholder="Enter class price"
-						required
-					/>
-				</div>
-
-				{/* Description */}
-				<div>
-					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-						Description
-					</label>
-					<textarea
-						name="description"
-						value={formData.description}
-						onChange={handleChange}
-						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
-						placeholder="Enter class description"
-						required
-					/>
-				</div>
-
-				{/* Image */}
-				<div>
-					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-						Image URL
-					</label>
-					<input
-						type="url"
-						name="image"
-						value={formData.image}
-						onChange={handleChange}
-						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
-						placeholder="Enter class image URL"
-						required
 					/>
 				</div>
 
