@@ -12,7 +12,7 @@ import MyEnrollClasses from '../pages/dashboard/student/MyEnrollClasses';
 import StudentProfile from '../pages/dashboard/student/StudentProfile';
 import AddClass from '../pages/dashboard/teacher/AddClass';
 import ClassDetails from '../pages/dashboard/teacher/ClassDetails';
-import MyClasses from '../pages/dashboard/teacher/MyClasses';
+import MyClasses from '../pages/dashboard/teacher/My-Classes/MyClasses';
 import TeacherProfile from '../pages/dashboard/teacher/TeacherProfile';
 import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/Homepage';
