@@ -22,6 +22,7 @@ import RegisterPage from '../pages/RegisterPage';
 import TeachPage from '../pages/TeachPage';
 import PrivateRoutes from '../routes/PrivateRoutes';
 import AdminRoutes from './AdminRoutes';
+import StudentRoutes from './StudentRoutes';
 import TeacherRoutes from './TeacherRoutes';
 const router = createBrowserRouter([
 	{
@@ -80,16 +81,21 @@ const router = createBrowserRouter([
 		children: [
 			// Student Routes
 			{
-				path: 'student/my-enroll-classes',
-				element: <MyEnrollClasses />,
-			},
-			{
-				path: 'student/my-enroll-classes/:id',
-				element: <EnrollClassDetails />,
-			},
-			{
-				path: 'student/profile',
-				element: <StudentProfile />,
+				element: <StudentRoutes />,
+				children: [
+					{
+						path: 'student/my-enroll-classes',
+						element: <MyEnrollClasses />,
+					},
+					{
+						path: 'student/my-enroll-classes/:id',
+						element: <EnrollClassDetails />,
+					},
+					{
+						path: 'student/profile',
+						element: <StudentProfile />,
+					},
+				],
 			},
 
 			// Admin Routes
