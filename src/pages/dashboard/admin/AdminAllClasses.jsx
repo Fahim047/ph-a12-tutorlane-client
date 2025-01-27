@@ -1,22 +1,6 @@
-const classes = [
-	{
-		id: '1',
-		title: 'Math Basics',
-		image: '/math.jpg',
-		email: 'teacher1@example.com',
-		description:
-			'Learn the basics of mathematics, including algebra and geometry.',
-		status: 'pending', // "pending", "approved", or "rejected"
-	},
-	{
-		id: '2',
-		title: 'Science Explorations',
-		image: '/science.jpg',
-		email: 'teacher2@example.com',
-		description: 'Explore the wonders of science, from physics to chemistry.',
-		status: 'approved',
-	},
-];
+import { useQuery } from '@tanstack/react-query';
+import LoadingComponent from '../../../components/shared/LoadingComponent';
+import { useAxios } from '../../../hooks';
 
 const handleApprove = (id) => {
 	console.log('Approve class:', id);
@@ -33,6 +17,17 @@ const handleViewProgress = (id) => {
 	// Add navigation or modal to view progress details
 };
 const AllClassesPage = () => {
+	const { axiosSecure } = useAxios();
+	const { data: classes, isPending } = useQuery({
+		queryKey: ['adminClasses'],
+		queryFn: async () => {
+			const response = await axiosSecure.get('/admin/classes');
+			return response.data;
+		},
+	});
+	if (isPending) {
+		return <LoadingComponent />;
+	}
 	return (
 		<div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
@@ -67,7 +62,7 @@ const AllClassesPage = () => {
 					<tbody>
 						{classes.map((cls) => (
 							<tr
-								key={cls.id}
+								key={cls._id}
 								className="hover:bg-gray-100 dark:hover:bg-gray-800"
 							>
 								{/* Title */}
@@ -78,7 +73,7 @@ const AllClassesPage = () => {
 								{/* Image */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
 									<img
-										src={cls.image}
+										src={cls.thumbnail}
 										alt={cls.title}
 										className="w-20 h-20 object-cover rounded-md"
 									/>
@@ -86,7 +81,7 @@ const AllClassesPage = () => {
 
 								{/* Email */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-									{cls.email}
+									{cls.teacherEmail}
 								</td>
 
 								{/* Description */}
@@ -99,7 +94,7 @@ const AllClassesPage = () => {
 								{/* Actions */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2 space-y-2">
 									<button
-										onClick={() => handleApprove(cls.id)}
+										onClick={() => handleApprove(cls._id)}
 										disabled={
 											cls.status === 'approved' || cls.status === 'rejected'
 										}
@@ -112,7 +107,7 @@ const AllClassesPage = () => {
 										Approve
 									</button>
 									<button
-										onClick={() => handleReject(cls.id)}
+										onClick={() => handleReject(cls._id)}
 										disabled={
 											cls.status === 'approved' || cls.status === 'rejected'
 										}
@@ -129,7 +124,7 @@ const AllClassesPage = () => {
 								{/* Progress */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
 									<button
-										onClick={() => handleViewProgress(cls.id)}
+										onClick={() => handleViewProgress(cls._id)}
 										disabled={cls.status !== 'approved'}
 										className={`w-full px-4 py-2 rounded-lg font-medium ${
 											cls.status === 'approved'

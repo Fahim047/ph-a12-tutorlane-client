@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -184,6 +185,13 @@ const TeacherClassCard = ({ cls, onSeeDetails, onUpdate, onDelete }) => {
 			)}
 		</div>
 	);
+};
+
+TeacherClassCard.propTypes = {
+	cls: PropTypes.object.isRequired,
+	onDelete: PropTypes.func.isRequired,
+	onSeeDetails: PropTypes.func.isRequired,
+	onUpdate: PropTypes.func.isRequired,
 };
 
 export default TeacherClassCard;
