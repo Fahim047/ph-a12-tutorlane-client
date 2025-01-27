@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
 
 const Sidebar = ({ links }) => {
 	return (
 		<div className="w-64 shadow-md bg-white dark:bg-gray-800">
-			<nav className="flex flex-col p-4">
+			<nav className="flex flex-col p-4 gap-2">
 				<h1 className="text-2xl font-bold text-primary mb-4">
 					TutorLane Dashboard
 				</h1>
@@ -22,6 +23,7 @@ const Sidebar = ({ links }) => {
 						{link.name}
 					</NavLink>
 				))}
+				<LogoutButton />
 			</nav>
 		</div>
 	);

@@ -3,7 +3,6 @@ import { useState } from 'react';
 const UsersManagementPage = ({ users, onMakeAdmin }) => {
 	const [searchTerm, setSearchTerm] = useState('');
 
-	// Filter users based on search term
 	const filteredUsers = users.filter(
 		(user) =>
 			user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -37,13 +36,16 @@ const UsersManagementPage = ({ users, onMakeAdmin }) => {
 					<thead className="bg-gray-100 dark:bg-gray-800">
 						<tr>
 							<th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">
-								User Name
+								Name
 							</th>
 							<th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">
 								Email
 							</th>
 							<th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">
 								Image
+							</th>
+							<th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">
+								Role
 							</th>
 							<th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">
 								Action
@@ -69,10 +71,14 @@ const UsersManagementPage = ({ users, onMakeAdmin }) => {
 								{/* Image */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
 									<img
-										src={user.image}
+										src={user.photoURL}
 										alt={user.name}
 										className="w-10 h-10 rounded-full"
 									/>
+								</td>
+								{/* Role */}
+								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
+									{user.role}
 								</td>
 
 								{/* Action */}

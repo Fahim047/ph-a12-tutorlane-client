@@ -2,7 +2,7 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth, useTheme } from '../../hooks'; // Assuming useTheme hook is available for theme switching
+import { useAuth, useTheme } from '../../hooks';
 import ThemeSwitcher from './ThemeSwitcher';
 
 const Navbar = () => {
