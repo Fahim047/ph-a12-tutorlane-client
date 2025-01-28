@@ -19,6 +19,7 @@ import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/Homepage';
 import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import PaymentPage from '../pages/payment/PaymentPage';
 import RegisterPage from '../pages/RegisterPage';
 import TeachPage from '../pages/TeachPage';
 import PrivateRoutes from '../routes/PrivateRoutes';
@@ -37,15 +38,19 @@ const router = createBrowserRouter([
 				element: <Homepage />,
 			},
 			{
-				path: '/classes',
+				path: 'classes',
 				element: <AllClassesPage />,
 			},
 			{
-				path: '/classes/:id',
+				path: 'classes/:id',
 				element: <ClassDetailsPage />,
 			},
 			{
-				path: '/teach',
+				path: 'classes/:id/payment',
+				element: <PaymentPage />,
+			},
+			{
+				path: 'teach',
 				element: (
 					<PrivateRoutes>
 						<TeachPage />,
@@ -53,7 +58,7 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: '/about',
+				path: 'about',
 				element: <About />,
 			},
 			{

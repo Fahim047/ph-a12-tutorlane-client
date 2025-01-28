@@ -31,7 +31,7 @@ const ClassDetailsPage = () => {
 	}
 
 	const handlePay = () => {
-		navigate(`/payment/${id}`); // Redirect to the payment page
+		navigate(`/classes/${id}/payment`); // Redirect to the payment page
 	};
 
 	return (
