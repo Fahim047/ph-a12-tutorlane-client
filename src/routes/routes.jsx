@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../layouts/Dashboard';
 import MainLayout from '../layouts/MainLayout';
 import About from '../pages/About';
-import AllClasses from '../pages/AllClasses';
+import AllClassesPage from '../pages/classes/AllClassesPage';
 import AdminAllClasses from '../pages/dashboard/admin/AdminAllClasses';
 import AdminProfile from '../pages/dashboard/admin/AdminProfile';
 import TeacherRequests from '../pages/dashboard/admin/TeacherRequests';
@@ -14,6 +14,7 @@ import AddClass from '../pages/dashboard/teacher/AddClass';
 import ClassDetails from '../pages/dashboard/teacher/ClassDetails';
 import MyClasses from '../pages/dashboard/teacher/My-Classes/MyClasses';
 import TeacherProfile from '../pages/dashboard/teacher/TeacherProfile';
+import ClassDetailsPage from '../pages/details/ClassDetailsPage';
 import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/Homepage';
 import LoginPage from '../pages/LoginPage';
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/classes',
-				element: <AllClasses />,
+				element: <AllClassesPage />,
+			},
+			{
+				path: '/classes/:id',
+				element: <ClassDetailsPage />,
 			},
 			{
 				path: '/teach',

@@ -14,7 +14,7 @@ const ErrorPage = () => {
 		"Sorry, something went wrong. We're working to fix it.";
 
 	return (
-		<div className="w-[100vw] min-h-screen bg-white flex flex-col items-center justify-center p-4">
+		<div className="w-full min-h-screen bg-white flex flex-col items-center justify-center p-4">
 			{/* Error Code Display */}
 			<div className="mb-8 relative">
 				<div className="text-8xl md:text-9xl font-bold text-darkText animate-bounce">
