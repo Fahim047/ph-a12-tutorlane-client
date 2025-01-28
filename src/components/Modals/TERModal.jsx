@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 
 const TERModal = ({ showTERModal, setShowTERModal, handleSendFeedback }) => {
 	const [feedback, setFeedback] = useState('');
 	const [rating, setRating] = useState(0);
+	const [error, setError] = useState('');
+
+	useEffect(() => {
+		if (showTERModal) {
+			setFeedback('');
+			setRating(0);
+			setError('');
+		}
+	}, [showTERModal]);
+
+	const handleClickFeedback = () => {
+		setError('');
+		if (rating < 1) {
+			setError('Please provide a rating of at least 1 star.');
+			return;
+		}
+		if (!feedback) {
+			setError('Please provide feedback.');
+			return;
+		}
+
+		handleSendFeedback(feedback, rating);
+		setFeedback('');
+		setRating(0);
+		setShowTERModal(false);
+	};
 
 	return (
 		showTERModal && (
@@ -24,6 +50,7 @@ const TERModal = ({ showTERModal, setShowTERModal, handleSendFeedback }) => {
 						value={rating}
 						onChange={(newRating) => setRating(newRating)}
 					/>
+					{error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 					<div className="mt-4 flex justify-end space-x-4">
 						<button
 							className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -33,7 +60,7 @@ const TERModal = ({ showTERModal, setShowTERModal, handleSendFeedback }) => {
 						</button>
 						<button
 							className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
-							onClick={() => handleSendFeedback(feedback, rating)}
+							onClick={handleClickFeedback}
 						>
 							Send
 						</button>

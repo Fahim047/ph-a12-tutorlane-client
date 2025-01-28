@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import TERModal from '../../../components/Modals/TERModal';
 import LoadingComponent from '../../../components/shared/LoadingComponent';
-import { useAxios } from '../../../hooks';
+import { useAxios, useUserDetails } from '../../../hooks';
 import AssignmentTable from './AssignmentTable';
 
 const MyEnrollClassDetails = () => {
+	const { userDetails } = useUserDetails();
 	const { id } = useParams();
 	const { axiosSecure } = useAxios();
 	const {
@@ -36,12 +38,22 @@ const MyEnrollClassDetails = () => {
 		}
 	};
 
-	const handleSendFeedback = (feedback, rating) => {
-		console.log('Teaching Evaluation Report:', {
-			feedback,
-			rating,
-		});
-		setShowTERModal(false); // Close modal after submission
+	const handleSendFeedback = async (feedback, rating) => {
+		try {
+			const response = await axiosSecure.post(`/classes/${id}/feedback`, {
+				feedback,
+				rating,
+				userId: userDetails._id,
+			});
+			if (response.status === 201) {
+				toast.success(response.data?.message || 'Feedback sent successfully.');
+			}
+		} catch (error) {
+			console.error('Error submitting assignment:', error);
+			toast.error(error?.message || 'Error submitting feedback.');
+		} finally {
+			setShowTERModal(false);
+		}
 	};
 
 	if (isPending) {
