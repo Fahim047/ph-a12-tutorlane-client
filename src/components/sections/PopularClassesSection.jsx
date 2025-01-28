@@ -1,11 +1,24 @@
-import PropTypes from 'prop-types';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { A11y, Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-const PopularClasses = ({ classes }) => {
+import axiosPublic from '../../api/axios';
+import LoadingComponent from '../shared/LoadingComponent';
+const PopularClasses = () => {
+	const { data: classes, isPending } = useQuery({
+		queryKey: ['popularClasses'],
+		queryFn: async () => {
+			const response = await axiosPublic.get(`/classes/popular`);
+			return response.data;
+		},
+	});
+	if (isPending) {
+		return <LoadingComponent />;
+	}
+	console.log(classes);
 	return (
 		<section className="w-full bg-neutral dark:bg-gray-900 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +47,7 @@ const PopularClasses = ({ classes }) => {
 								{/* Image Section */}
 								<div className="h-40 w-full mb-4">
 									<img
-										src={course.image}
+										src={course.thumbnail}
 										alt={course.title}
 										className="w-full h-full object-cover rounded-md"
 									/>
@@ -50,7 +63,7 @@ const PopularClasses = ({ classes }) => {
 									{/* Button Section */}
 									<div className="mt-auto">
 										<Link
-											to={`/classes/${course.id}`}
+											to={`/classes/${course._id}`}
 											className="block w-full text-center px-6 py-3 bg-primary text-white rounded-md shadow hover:bg-primary/90 transition"
 										>
 											View Details
@@ -64,17 +77,6 @@ const PopularClasses = ({ classes }) => {
 			</div>
 		</section>
 	);
-};
-PopularClasses.propTypes = {
-	classes: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			image: PropTypes.string.isRequired,
-			enrollments: PropTypes.number.isRequired,
-		})
-	).isRequired,
 };
 
 export default PopularClasses;

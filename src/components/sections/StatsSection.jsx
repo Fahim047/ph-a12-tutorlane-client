@@ -1,8 +1,24 @@
+import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
+import axiosPublic from '../../api/axios';
+import LoadingComponent from '../shared/LoadingComponent';
 
-const StatsSection = ({ stats }) => {
-	const { totalUsers, totalClasses, totalEnrollments } = stats;
+const StatsSection = () => {
+	const { data, isPending } = useQuery({
+		queryKey: ['websiteStats'],
+		queryFn: async () => {
+			console.log('Fetching website stats...');
+			const response = await axiosPublic.get('/users/website-stats');
 
+			return response.data;
+		},
+	});
+
+	if (isPending) {
+		return <LoadingComponent />;
+	}
+
+	const { totalUsers, totalClasses, totalEnrollments } = data;
 	return (
 		<section className="w-full py-12 bg-neutral dark:bg-gray-900">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -42,7 +58,7 @@ const StatsSection = ({ stats }) => {
 				{/* Right: Image */}
 				<div className="flex justify-center">
 					<img
-						src="https://placehold.co/600x400?text=Learning+Illustration"
+						src="https://plus.unsplash.com/premium_photo-1661380797814-d0bcc01342b7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 						alt="Learning Illustration"
 						className="w-full max-w-md rounded-lg shadow-lg"
 					/>

@@ -7,16 +7,15 @@ import InspireTeachersSection from '../components/sections/InspireTeachersSectio
 import PopularClasses from '../components/sections/PopularClassesSection';
 import StatsSection from '../components/sections/StatsSection';
 import StudentTestimonialsSection from '../components/sections/StudentsTestimonials';
-import { classes, feedbacks, stats } from '../data/data';
+import { feedbacks } from '../data/data';
 const Homepage = () => {
 	return (
 		<div className="w-full">
 			<Banner />
-			<PopularClasses classes={classes} />
+			<PopularClasses />
 			<FeedbackSection feedbacks={feedbacks} />
-
 			<AchievementsSection />
-			<StatsSection stats={stats} />
+			<StatsSection />
 			<InspireTeachersSection />
 			<HowItWorksSection />
 			<StudentTestimonialsSection />
