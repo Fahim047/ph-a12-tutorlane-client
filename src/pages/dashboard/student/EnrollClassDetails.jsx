@@ -2,6 +2,15 @@ import { useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import { assignments } from '../../../data/data';
 const MyEnrollClassDetails = () => {
+	// const {id}= useParams();
+	// const {axiosSecure} = useAxios()
+	// const {data: classDetails} = useQuery({
+	// 	queryKey: ['classDetails', id],
+	// 	queryFn: async () => {
+	// 		const response = await axiosSecure.get(`/classes/${id}`);
+	// 		return response.data;
+	// 	}
+	// })
 	const classTitle = 'Introduction to Python';
 	const [showTERModal, setShowTERModal] = useState(false);
 	const [feedback, setFeedback] = useState('');

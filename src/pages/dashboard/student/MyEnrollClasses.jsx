@@ -53,7 +53,7 @@ const MyEnrolledClasses = () => {
 							</p>
 							<button
 								className="mt-4 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
-								onClick={() => navigate(`${classItem.id}`)}
+								onClick={() => navigate(`${classItem._id}`)}
 							>
 								Continue
 							</button>
