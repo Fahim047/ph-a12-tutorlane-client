@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import { assignments } from '../../../data/data';
@@ -153,18 +152,6 @@ const MyEnrollClassDetails = () => {
 			)}
 		</div>
 	);
-};
-
-MyEnrollClassDetails.propTypes = {
-	classTitle: PropTypes.string.isRequired,
-	assignments: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			title: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			deadline: PropTypes.string.isRequired,
-		})
-	).isRequired,
 };
 
 export default MyEnrollClassDetails;

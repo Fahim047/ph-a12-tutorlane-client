@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { enrolledClasses as classes } from '../../../data/data';
 const MyEnrolledClasses = () => {
@@ -36,17 +35,6 @@ const MyEnrolledClasses = () => {
 			</div>
 		</div>
 	);
-};
-
-MyEnrolledClasses.propTypes = {
-	classes: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			title: PropTypes.string.isRequired,
-			teacherName: PropTypes.string.isRequired,
-			image: PropTypes.string.isRequired,
-		})
-	).isRequired,
 };
 
 export default MyEnrolledClasses;

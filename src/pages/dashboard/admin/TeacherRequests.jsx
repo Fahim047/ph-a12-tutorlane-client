@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { useAxios } from '../../../hooks';
 import { getTeacherRequests } from '../../../utils/queries';
@@ -129,22 +128,6 @@ const TeacherRequestPage = () => {
 			</div>
 		</div>
 	);
-};
-
-TeacherRequestPage.propTypes = {
-	requests: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			image: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			experience: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			category: PropTypes.string.isRequired,
-			status: PropTypes.oneOf(['pending', 'accepted', 'rejected']).isRequired,
-		})
-	).isRequired,
-	handleApprove: PropTypes.func.isRequired,
-	handleReject: PropTypes.func.isRequired,
 };
 
 export default TeacherRequestPage;
