@@ -11,7 +11,7 @@ import EnrollClassDetails from '../pages/dashboard/student/EnrollClassDetails';
 import MyEnrollClasses from '../pages/dashboard/student/MyEnrollClasses';
 import StudentProfile from '../pages/dashboard/student/StudentProfile';
 import AddClass from '../pages/dashboard/teacher/AddClass';
-import ClassDetails from '../pages/dashboard/teacher/ClassDetails';
+import ClassDetails from '../pages/dashboard/teacher/DetailsPage/ClassDetails';
 import MyClasses from '../pages/dashboard/teacher/My-Classes/MyClasses';
 import TeacherProfile from '../pages/dashboard/teacher/TeacherProfile';
 import ClassDetailsPage from '../pages/details/ClassDetailsPage';
