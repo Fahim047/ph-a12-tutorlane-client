@@ -9,15 +9,19 @@ const TeachPage = () => {
 	const { axiosSecure } = useAxios();
 	const { role } = useUserRole();
 	const [message, setMessage] = useState('');
+
 	const { data: request, isPending } = useQuery({
 		queryKey: ['teacherRequest', user?.email],
 		queryFn: asyncHandler(async () => {
+			if (!user?.email) return null;
 			const response = await axiosSecure.get(
-				`/users/teach-request?email=${user?.email}`
+				`/users/teach-request?email=${user.email}`
 			);
-			return response.data;
+			return response.data || null; // Handle cases where no data is returned
 		}),
+		enabled: !!user?.email,
 	});
+
 	const {
 		register,
 		handleSubmit,
@@ -30,9 +34,11 @@ const TeachPage = () => {
 			category: 'Web Development',
 		},
 	});
+
 	if (isPending) {
 		return <h2>Loading request data...</h2>;
 	}
+
 	if (role === 'admin') {
 		return null;
 	}
@@ -44,19 +50,23 @@ const TeachPage = () => {
 		'Data Science',
 		'Cybersecurity',
 	];
+
 	const onSubmit = async (data) => {
 		if (role === 'teacher') {
 			setMessage('You are already a teacher.');
 			return;
 		}
+
 		try {
-			if (request && request.status === 'rejected') {
+			if (request?.status === 'rejected') {
+				// Resubmit for review
 				await axiosSecure.patch('/users/teach-request', {
 					...data,
 					email: user.email,
 				});
 				setMessage('Your request has been resubmitted for review.');
 			} else {
+				// Submit new request
 				await axiosSecure.post('/users/teach-request', {
 					...data,
 					name: user.displayName,
@@ -86,7 +96,7 @@ const TeachPage = () => {
 		);
 	}
 
-	if (request.status === 'pending') {
+	if (request?.status === 'pending') {
 		return (
 			<div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
 				<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
@@ -100,7 +110,7 @@ const TeachPage = () => {
 	}
 
 	return (
-		<div className="mt-16 max-w-4xl mx-auto p-6 min-h-screen">
+		<div className="w-full mt-16 max-w-4xl bg-white dark:bg-gray-900 mx-auto p-6 min-h-screen">
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
 				Teach on TutorLane
 			</h1>
@@ -109,7 +119,7 @@ const TeachPage = () => {
 					{message}
 				</div>
 			)}
-			{request.status === 'rejected' && (
+			{request?.status === 'rejected' && (
 				<div className="mb-4 p-4 bg-red-100 text-red-500 font-bold">
 					Oops! Your previous request is rejected!
 				</div>
@@ -122,7 +132,7 @@ const TeachPage = () => {
 						className="w-32 h-32 rounded-full mb-4"
 					/>
 					<h2 className="text-lg font-semibold text-gray-700 dark:text-white">
-						{user.name}
+						{user.displayName}
 					</h2>
 					<p className="text-gray-600 dark:text-gray-400">{user.email}</p>
 				</div>
@@ -189,7 +199,7 @@ const TeachPage = () => {
 							type="submit"
 							className="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600"
 						>
-							{request.status === 'rejected'
+							{request?.status === 'rejected'
 								? 'Request again!'
 								: 'Submit for Review'}
 						</button>

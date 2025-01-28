@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
 
 const Sidebar = ({ links }) => {
@@ -7,7 +7,7 @@ const Sidebar = ({ links }) => {
 		<div className="w-64 shadow-md bg-white dark:bg-gray-800">
 			<nav className="flex flex-col p-4 gap-2">
 				<h1 className="text-2xl font-bold text-primary mb-4">
-					TutorLane Dashboard
+					<Link to="/">TutorLane Dashboard</Link>
 				</h1>
 				{links.map((link) => (
 					<NavLink

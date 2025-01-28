@@ -103,7 +103,7 @@ const RegisterPage = () => {
 				<div className="w-full max-w-md">
 					<Link
 						to="/"
-						className="w-fit flex gap-1 items-center text-neutral rounded-md mb-8 hover:text-subtleText transition-colors"
+						className="w-fit flex gap-1 items-center text-darkText dark:text-primary rounded-md mb-8 hover:text-subtleText transition-colors"
 					>
 						<ChevronLeft size={24} />
 						Home

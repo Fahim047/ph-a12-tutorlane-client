@@ -62,7 +62,6 @@ const LoginPage = () => {
 				}
 			);
 			const data = await response.json();
-			console.log(data);
 			toast.success('Login successful');
 			navigate('/');
 		} catch (err) {
@@ -96,7 +95,7 @@ const LoginPage = () => {
 				<div className="w-full max-w-md">
 					<Link
 						to="/"
-						className="w-fit flex gap-1 items-center text-neutral rounded-md mb-8 hover:text-subtleText transition-colors"
+						className="w-fit flex gap-1 items-center text-darkText dark:text-primary rounded-md mb-8 hover:text-subtleText transition-colors"
 					>
 						<ChevronLeft size={24} />
 						Home
@@ -197,7 +196,7 @@ const LoginPage = () => {
 							<button
 								onClick={handleGoogleLogin}
 								type="button"
-								className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-neutral text-neutral rounded-lg hover:bg-neutral hover:text-darkText transition-colors"
+								className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-primary rounded-lg hover:bg-neutral hover:text-darkText transition-colors"
 							>
 								<img src={GoogleIcon} alt="Google Logo" className="size-6" />
 								<span>Continue with Google</span>
