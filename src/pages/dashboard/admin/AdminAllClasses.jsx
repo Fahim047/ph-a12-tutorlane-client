@@ -1,20 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import LoadingComponent from '../../../components/shared/LoadingComponent';
 import { useAxios } from '../../../hooks';
 
-const handleApprove = (id) => {
-	console.log('Approve class:', id);
-	// Add API call to update class status
-};
-
-const handleReject = (id) => {
-	console.log('Reject class:', id);
-	// Add API call to update class status
-};
-
 const handleViewProgress = (id) => {
-	console.log('View Progress for class:', id);
-	// Add navigation or modal to view progress details
+	toast.warning('Not implemented yet');
 };
 const AllClassesPage = () => {
 	const { axiosSecure } = useAxios();
@@ -25,6 +15,28 @@ const AllClassesPage = () => {
 			return response.data;
 		},
 	});
+	const handleApprove = async (id) => {
+		try {
+			const response = await axiosSecure.patch(`/admin/classes/${id}/approve`);
+			if (response.status === 200) {
+				toast.success(response.data?.message);
+			}
+		} catch (err) {
+			console.log(err);
+			toast.error(err?.message);
+		}
+	};
+	const handleReject = async (id) => {
+		try {
+			const response = await axiosSecure.patch(`/admin/classes/${id}/reject`);
+			if (response.status === 200) {
+				toast.success(response.data?.message);
+			}
+		} catch (err) {
+			console.log(err);
+			toast.error(err?.message);
+		}
+	};
 	if (isPending) {
 		return <LoadingComponent />;
 	}
@@ -62,7 +74,7 @@ const AllClassesPage = () => {
 					<tbody>
 						{classes.map((cls) => (
 							<tr
-								key={cls._id}
+								key={cls.id}
 								className="hover:bg-gray-100 dark:hover:bg-gray-800"
 							>
 								{/* Title */}
@@ -94,7 +106,7 @@ const AllClassesPage = () => {
 								{/* Actions */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2 space-y-2">
 									<button
-										onClick={() => handleApprove(cls._id)}
+										onClick={() => handleApprove(cls.id)}
 										disabled={
 											cls.status === 'approved' || cls.status === 'rejected'
 										}
@@ -107,7 +119,7 @@ const AllClassesPage = () => {
 										Approve
 									</button>
 									<button
-										onClick={() => handleReject(cls._id)}
+										onClick={() => handleReject(cls.id)}
 										disabled={
 											cls.status === 'approved' || cls.status === 'rejected'
 										}
@@ -124,7 +136,7 @@ const AllClassesPage = () => {
 								{/* Progress */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
 									<button
-										onClick={() => handleViewProgress(cls._id)}
+										onClick={() => handleViewProgress(cls.id)}
 										disabled={cls.status !== 'approved'}
 										className={`w-full px-4 py-2 rounded-lg font-medium ${
 											cls.status === 'approved'
