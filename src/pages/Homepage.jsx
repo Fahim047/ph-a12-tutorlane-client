@@ -1,5 +1,6 @@
 import Banner from '../components/Banner/Banner';
 import AchievementsSection from '../components/sections/AchievementsSection';
+import BrandSections from '../components/sections/BrandSections';
 import FAQSection from '../components/sections/FAQSection';
 import FeedbackSection from '../components/sections/FeedbackSection';
 import HowItWorksSection from '../components/sections/HowItWorks';
@@ -12,6 +13,7 @@ const Homepage = () => {
 	return (
 		<div className="w-full">
 			<Banner />
+			<BrandSections />
 			<PopularClasses />
 			<FeedbackSection feedbacks={feedbacks} />
 			<AchievementsSection />

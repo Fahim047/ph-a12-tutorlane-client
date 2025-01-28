@@ -182,3 +182,38 @@ export const assignments = [
 		deadline: '2025-02-10',
 	},
 ];
+export const partners = [
+	{
+		id: 1,
+		name: 'Princeton',
+		image:
+			'https://www.react-fast-marquee.com/static/media/princeton.5d0a5006.png',
+	},
+	{
+		id: 2,
+		name: 'Microsoft',
+		image:
+			'https://www.react-fast-marquee.com/static/media/microsoft.4a9a93f0.png',
+	},
+	{
+		id: 3,
+		name: 'IBM',
+		image: 'max-w-7xl mx-auto',
+	},
+	{
+		id: 4,
+		name: 'MIT',
+		image: 'https://www.react-fast-marquee.com/static/media/mit.1af911d7.png',
+	},
+	{
+		id: 5,
+		name: 'Boeing',
+		image:
+			'https://www.react-fast-marquee.com/static/media/boeing.3037b0a6.png',
+	},
+	{
+		id: 6,
+		name: 'NASA',
+		image: 'https://www.react-fast-marquee.com/static/media/nasa.3bf5af29.png',
+	},
+];
