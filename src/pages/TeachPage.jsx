@@ -33,6 +33,9 @@ const TeachPage = () => {
 	if (isPending) {
 		return <h2>Loading request data...</h2>;
 	}
+	if (role === 'admin') {
+		return null;
+	}
 
 	const categories = [
 		'Web Development',

@@ -81,65 +81,134 @@ const router = createBrowserRouter([
 		children: [
 			// Student Routes
 			{
-				element: <StudentRoutes />,
+				path: 'student',
 				children: [
 					{
-						path: 'student/my-enroll-classes',
-						element: <MyEnrollClasses />,
+						path: 'my-enroll-classes',
+						element: (
+							<StudentRoutes>
+								<MyEnrollClasses />,
+							</StudentRoutes>
+						),
 					},
 					{
-						path: 'student/my-enroll-classes/:id',
-						element: <EnrollClassDetails />,
+						path: 'my-enroll-classes/:id',
+						element: (
+							<StudentRoutes>
+								<EnrollClassDetails />,
+							</StudentRoutes>
+						),
 					},
 					{
-						path: 'student/profile',
-						element: <StudentProfile />,
+						index: true,
+						element: (
+							<StudentRoutes>
+								<StudentProfile />,
+							</StudentRoutes>
+						),
+					},
+					{
+						path: 'profile',
+						element: (
+							<StudentRoutes>
+								<StudentProfile />,
+							</StudentRoutes>
+						),
 					},
 				],
 			},
 
 			// Admin Routes
 			{
-				element: <AdminRoutes />,
+				path: 'admin',
 				children: [
 					{
-						path: 'admin/teacher-requests',
-						element: <TeacherRequests />,
+						path: 'teacher-requests',
+						element: (
+							<AdminRoutes>
+								<TeacherRequests />,
+							</AdminRoutes>
+						),
 					},
 					{
-						path: 'admin/users',
-						element: <Users />,
+						path: 'users',
+						element: (
+							<AdminRoutes>
+								<Users />,
+							</AdminRoutes>
+						),
 					},
 					{
-						path: 'admin/all-classes',
-						element: <AdminAllClasses />,
+						path: 'all-classes',
+						element: (
+							<AdminRoutes>
+								<AdminAllClasses />
+							</AdminRoutes>
+						),
 					},
 					{
-						path: 'admin/profile',
-						element: <AdminProfile />,
+						index: true,
+						element: (
+							<AdminRoutes>
+								<AdminProfile />,
+							</AdminRoutes>
+						),
+					},
+					{
+						path: 'profile',
+						index: true,
+						element: (
+							<AdminRoutes>
+								<AdminProfile />,
+							</AdminRoutes>
+						),
 					},
 				],
 			},
 
 			// Teacher Routes
 			{
-				element: <TeacherRoutes />,
+				path: 'teacher',
 				children: [
 					{
-						path: 'teacher/add-class',
-						element: <AddClass />,
+						path: 'add-class',
+						element: (
+							<TeacherRoutes>
+								<AddClass />,
+							</TeacherRoutes>
+						),
 					},
 					{
-						path: 'teacher/my-classes',
-						element: <MyClasses />,
+						path: 'my-classes',
+						element: (
+							<TeacherRoutes>
+								<MyClasses />
+							</TeacherRoutes>
+						),
 					},
 					{
-						path: 'teacher/my-classes/:id',
-						element: <ClassDetails />,
+						path: 'my-classes/:id',
+						element: (
+							<TeacherRoutes>
+								<ClassDetails />,
+							</TeacherRoutes>
+						),
 					},
 					{
-						path: 'teacher/profile',
-						element: <TeacherProfile />,
+						index: true,
+						element: (
+							<TeacherRoutes>
+								<TeacherProfile />,
+							</TeacherRoutes>
+						),
+					},
+					{
+						path: 'profile',
+						element: (
+							<TeacherRoutes>
+								<TeacherProfile />,
+							</TeacherRoutes>
+						),
 					},
 				],
 			},

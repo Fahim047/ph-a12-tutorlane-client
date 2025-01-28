@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import LoadingComponent from '../components/shared/LoadingComponent';
 import Sidebar from '../components/shared/Sidebar';
 import ThemeSwitcher from '../components/shared/ThemeSwitcher';
@@ -8,6 +9,7 @@ const DashboardLayout = () => {
 	const { user } = useAuth();
 	const { role, isLoading, error } = useUserRole();
 	const { darkMode, setDarkMode } = useTheme();
+	const navigate = useNavigate();
 
 	const sidebarLinks = {
 		student: [
@@ -28,6 +30,13 @@ const DashboardLayout = () => {
 	};
 
 	const links = role ? sidebarLinks[role] : [];
+
+	useEffect(() => {
+		// Redirect to the appropriate dashboard based on the role
+		if (!isLoading && role) {
+			navigate(`/dashboard/${role}`);
+		}
+	}, [role, isLoading, navigate]);
 
 	if (isLoading) {
 		return <LoadingComponent />;
