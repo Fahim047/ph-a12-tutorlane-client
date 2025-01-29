@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAuth, useAxios } from '../../../hooks';
@@ -5,29 +6,39 @@ import { useAuth, useAxios } from '../../../hooks';
 const AddClassPage = () => {
 	const { axiosSecure } = useAxios();
 	const { user } = useAuth();
-
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 	} = useForm();
+	const queryClient = useQueryClient();
 
-	const onSubmit = async (data) => {
-		console.log('Class added:', data);
-		try {
-			const response = await axiosSecure.post('/teachers/classes', {
-				...data,
-				teacherName: user?.displayName,
-				teacherEmail: user?.email,
-			});
-			if (response.status === 201) {
-				toast.success(response.data?.message);
-				reset();
-			}
-		} catch (err) {
-			console.error(err);
-		}
+	// Mutation for adding a new class
+	const mutation = useMutation({
+		mutationFn: async (newClass) => {
+			const response = await axiosSecure.post('/teachers/classes', newClass);
+			return response.data;
+		},
+		onSuccess: () => {
+			toast.success('Class added successfully');
+			reset();
+			queryClient.invalidateQueries(['teacherClasses', user?.email]);
+		},
+		onError: (error) => {
+			console.error('Error adding class:', error);
+			toast.error('Failed to add class. Please try again.');
+		},
+	});
+
+	const onSubmit = (data) => {
+		const newClass = {
+			...data,
+			teacherName: user?.displayName,
+			teacherEmail: user?.email,
+		};
+
+		mutation.mutate(newClass);
 	};
 
 	return (
@@ -74,7 +85,8 @@ const AddClassPage = () => {
 						</p>
 					)}
 				</div>
-				{/* Image */}
+
+				{/* Thumbnail */}
 				<div>
 					<label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
 						Thumbnail
@@ -91,8 +103,10 @@ const AddClassPage = () => {
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
 						placeholder="Enter thumbnail image URL"
 					/>
-					{errors.image && (
-						<p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+					{errors.thumbnail && (
+						<p className="text-red-500 text-sm mt-1">
+							{errors.thumbnail.message}
+						</p>
 					)}
 				</div>
 
@@ -122,7 +136,7 @@ const AddClassPage = () => {
 					</label>
 					<input
 						type="text"
-						value={user.displayName}
+						value={user?.displayName || ''}
 						readOnly
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
 					/>
@@ -135,7 +149,7 @@ const AddClassPage = () => {
 					</label>
 					<input
 						type="email"
-						value={user.email}
+						value={user?.email || ''}
 						readOnly
 						className="w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
 					/>
@@ -145,9 +159,10 @@ const AddClassPage = () => {
 				<div>
 					<button
 						type="submit"
-						className="w-full px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark"
+						disabled={mutation.isLoading}
+						className="w-full px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark disabled:bg-gray-400 disabled:cursor-not-allowed"
 					>
-						Add Class
+						{mutation.isLoading ? 'Adding Class...' : 'Add Class'}
 					</button>
 				</div>
 			</form>

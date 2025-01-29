@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import LoadingComponent from '../../../../components/shared/LoadingComponent';
 import { useAuth, useAxios } from '../../../../hooks';
 import TeacherClassCard from './TeacherClassCard';
@@ -8,6 +9,7 @@ const MyClasses = () => {
 	const { user } = useAuth();
 	const { axiosSecure } = useAxios();
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	const { data: classes, isPending } = useQuery({
 		queryKey: ['teacherClasses', user?.email],
@@ -19,30 +21,77 @@ const MyClasses = () => {
 		},
 	});
 
-	// Function to delete a class
-	const handleDeleteClass = async (id) => {
-		try {
-			await axiosSecure.delete(`/teachers/classes/${id}`);
-			alert('Class deleted successfully.');
-		} catch (error) {
+	// Mutation for deleting a class
+	const deleteClassMutation = useMutation({
+		mutationFn: (id) => axiosSecure.delete(`/teachers/classes/${id}`),
+		onSuccess: () => {
+			queryClient.invalidateQueries(['teacherClasses', user?.email]);
+			toast.success('Class deleted successfully!');
+		},
+		onError: (error) => {
 			console.error('Failed to delete class:', error);
-			alert('Failed to delete class. Please try again.');
-		}
+			toast.error('Failed to delete class. Please try again.');
+		},
+	});
+
+	// Mutation for updating a class
+	const updateClassMutation = useMutation({
+		mutationFn: (updatedData) =>
+			axiosSecure.patch(`/teachers/classes/${updatedData.id}`, updatedData),
+		onSuccess: () => {
+			queryClient.invalidateQueries(['teacherClasses', user?.email]);
+			toast.success('Class updated successfully!');
+		},
+		onError: (error) => {
+			console.error('Failed to update class:', error);
+			toast.error('Failed to update class. Please try again.');
+		},
+	});
+
+	const handleDeleteClass = (id) => {
+		toast.warning(
+			<div>
+				<p>Are you sure you want to delete this class?</p>
+				<button
+					onClick={() => {
+						deleteClassMutation.mutate(id);
+						toast.dismiss();
+					}}
+					style={{
+						marginRight: '10px',
+						padding: '5px 10px',
+						background: 'red',
+						color: 'white',
+						border: 'none',
+						borderRadius: '5px',
+					}}
+				>
+					Yes
+				</button>
+				<button
+					onClick={() => toast.dismiss()}
+					style={{
+						padding: '5px 10px',
+						background: 'gray',
+						color: 'white',
+						border: 'none',
+						borderRadius: '5px',
+					}}
+				>
+					No
+				</button>
+			</div>,
+			{
+				position: 'top-center',
+				autoClose: false,
+				closeOnClick: false,
+				draggable: true,
+			}
+		);
 	};
 
-	// Function to update a class
-	const handleUpdateClass = async (updatedData) => {
-		console.log('Updating class:', updatedData);
-		try {
-			await axiosSecure.patch(
-				`/teachers/classes/${updatedData.id}`,
-				updatedData
-			);
-			alert('Class updated successfully.');
-		} catch (error) {
-			console.error('Failed to update class:', error);
-			alert('Failed to update class. Please try again.');
-		}
+	const handleUpdateClass = (updatedData) => {
+		updateClassMutation.mutate(updatedData);
 	};
 
 	const handleSeeDetails = (cls) => {

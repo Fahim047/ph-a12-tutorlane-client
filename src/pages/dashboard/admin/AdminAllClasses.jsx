@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import LoadingComponent from '../../../components/shared/LoadingComponent';
 import { useAxios } from '../../../hooks';
@@ -6,8 +6,12 @@ import { useAxios } from '../../../hooks';
 const handleViewProgress = (id) => {
 	toast.warning('Not implemented yet');
 };
+
 const AllClassesPage = () => {
 	const { axiosSecure } = useAxios();
+	const queryClient = useQueryClient();
+
+	// Fetching classes
 	const { data: classes, isPending } = useQuery({
 		queryKey: ['adminClasses'],
 		queryFn: async () => {
@@ -15,31 +19,41 @@ const AllClassesPage = () => {
 			return response.data;
 		},
 	});
-	const handleApprove = async (id) => {
-		try {
+
+	// Approve Class Mutation
+	const { mutate: approveClass } = useMutation({
+		mutationFn: async (id) => {
 			const response = await axiosSecure.patch(`/admin/classes/${id}/approve`);
-			if (response.status === 200) {
-				toast.success(response.data?.message);
-			}
-		} catch (err) {
-			console.log(err);
-			toast.error(err?.message);
-		}
-	};
-	const handleReject = async (id) => {
-		try {
+			return response.data;
+		},
+		onSuccess: (data) => {
+			toast.success(data?.message || 'Class approved successfully!');
+			queryClient.invalidateQueries(['adminClasses']);
+		},
+		onError: (err) => {
+			toast.error(err?.message || 'Failed to approve class.');
+		},
+	});
+
+	// Reject Class Mutation
+	const { mutate: rejectClass } = useMutation({
+		mutationFn: async (id) => {
 			const response = await axiosSecure.patch(`/admin/classes/${id}/reject`);
-			if (response.status === 200) {
-				toast.success(response.data?.message);
-			}
-		} catch (err) {
-			console.log(err);
-			toast.error(err?.message);
-		}
-	};
+			return response.data;
+		},
+		onSuccess: (data) => {
+			toast.success(data?.message || 'Class rejected successfully!');
+			queryClient.invalidateQueries(['adminClasses']);
+		},
+		onError: (err) => {
+			toast.error(err?.message || 'Failed to reject class.');
+		},
+	});
+
 	if (isPending) {
 		return <LoadingComponent />;
 	}
+
 	return (
 		<div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
@@ -106,12 +120,10 @@ const AllClassesPage = () => {
 								{/* Actions */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2 space-y-2">
 									<button
-										onClick={() => handleApprove(cls.id)}
-										disabled={
-											cls.status === 'approved' || cls.status === 'rejected'
-										}
+										onClick={() => approveClass(cls.id)}
+										disabled={cls.status !== 'pending'}
 										className={`w-full px-4 py-2 rounded-lg font-medium ${
-											cls.status === 'approved' || cls.status === 'rejected'
+											cls.status !== 'pending'
 												? 'bg-gray-400 text-gray-600 cursor-not-allowed'
 												: 'bg-green-500 text-white hover:bg-green-600'
 										}`}
@@ -119,12 +131,10 @@ const AllClassesPage = () => {
 										Approve
 									</button>
 									<button
-										onClick={() => handleReject(cls.id)}
-										disabled={
-											cls.status === 'approved' || cls.status === 'rejected'
-										}
+										onClick={() => rejectClass(cls.id)}
+										disabled={cls.status !== 'pending'}
 										className={`w-full px-4 py-2 rounded-lg font-medium ${
-											cls.status === 'approved' || cls.status === 'rejected'
+											cls.status !== 'pending'
 												? 'bg-gray-400 text-gray-600 cursor-not-allowed'
 												: 'bg-red-500 text-white hover:bg-red-600'
 										}`}
