@@ -9,6 +9,7 @@ const UserProfile = () => {
 				<img
 					src={user.photoURL}
 					alt={`${user.displayName}'s profile`}
+					referrerPolicy="no-referrer"
 					className="w-24 h-24 rounded-full border-4 border-primary"
 				/>
 			</div>

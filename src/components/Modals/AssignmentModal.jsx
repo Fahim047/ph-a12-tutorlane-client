@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 
-const AssignmentModal = ({ isOpen, onClose, onAddAssignment }) => {
+const AssignmentModal = ({ isOpen, onClose, onAddAssignment, isLoading }) => {
 	const {
 		register,
 		handleSubmit,
@@ -8,10 +9,9 @@ const AssignmentModal = ({ isOpen, onClose, onAddAssignment }) => {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => {
-		onAddAssignment(data);
+	const onSubmit = async (data) => {
+		await onAddAssignment(data);
 		reset();
-		onClose();
 	};
 
 	if (!isOpen) return null;
@@ -64,22 +64,33 @@ const AssignmentModal = ({ isOpen, onClose, onAddAssignment }) => {
 					<div className="flex justify-end space-x-2">
 						<button
 							type="button"
-							onClick={onClose}
+							onClick={() => {
+								reset();
+								onClose();
+							}}
 							className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+							disabled={isLoading}
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
 							className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+							disabled={isLoading} // Disable submit button during loading
 						>
-							Add Assignment
+							{isLoading ? 'Adding...' : 'Add Assignment'}
 						</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	);
+};
+AssignmentModal.propTypes = {
+	isOpen: PropTypes.bool.isRequired,
+	onClose: PropTypes.func.isRequired,
+	onAddAssignment: PropTypes.func.isRequired,
+	isLoading: PropTypes.bool.isRequired,
 };
 
 export default AssignmentModal;

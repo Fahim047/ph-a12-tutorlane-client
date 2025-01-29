@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,27 +7,13 @@ import AssignmentModal from '../../../../components/Modals/AssignmentModal';
 import LoadingComponent from '../../../../components/shared/LoadingComponent';
 import AssignmentTable from '../../../../components/Tables/AssignmentTable';
 import { useAxios } from '../../../../hooks';
-
-const ClassStats = ({ stats }) => (
-	<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-		<div className="bg-blue-500 text-white p-4 rounded-lg shadow">
-			<h2 className="text-lg font-bold">Total Enrollments</h2>
-			<p className="text-2xl">{stats?.totalEnrollments}</p>
-		</div>
-		<div className="bg-green-500 text-white p-4 rounded-lg shadow">
-			<h2 className="text-lg font-bold">Total Assignments</h2>
-			<p className="text-2xl">{stats?.totalAssignments}</p>
-		</div>
-		<div className="bg-orange-500 text-white p-4 rounded-lg shadow">
-			<h2 className="text-lg font-bold">Total Submissions</h2>
-			<p className="text-2xl">{stats?.submissions}</p>
-		</div>
-	</div>
-);
+import ClassStats from './ClassStats';
 
 const MyClassDetails = () => {
 	const { id } = useParams();
 	const { axiosSecure } = useAxios();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const { data: classDetails, isPending } = useQuery({
 		queryKey: ['classDetails', id],
 		queryFn: async () => {
@@ -35,26 +21,25 @@ const MyClassDetails = () => {
 			return response.data;
 		},
 	});
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const queryClint = useQueryClient();
+
+	const { mutate: createAssignment, isPending: isCreating } = useMutation({
+		mutationFn: async (assignment) => {
+			await axiosSecure.post(`/teachers/classes/${id}/assignments`, assignment);
+		},
+		onSuccess: () => {
+			setIsModalOpen(false);
+			toast.success('Assignment created successfully!');
+			queryClint.invalidateQueries(['classDetails', id]);
+		},
+		onError: (error) => {
+			toast.error('Failed to create assignment. Please try again.');
+			console.error('Error creating assignment:', error);
+		},
+	});
 
 	const toggleModal = () => {
 		setIsModalOpen((prev) => !prev);
-	};
-
-	const handleAddAssignment = async (assignment) => {
-		console.log('New Assignment:', assignment);
-		try {
-			const response = await axiosSecure.post(
-				`/teachers/classes/${id}/assignments`,
-				assignment
-			);
-			if (response.status === 201) {
-				toast.success(response.data?.message);
-			}
-		} catch (err) {
-			console.error(err);
-			toast.error(err?.message);
-		}
 	};
 
 	if (isPending) {
@@ -80,7 +65,8 @@ const MyClassDetails = () => {
 			<AssignmentModal
 				isOpen={isModalOpen}
 				onClose={toggleModal}
-				onAddAssignment={handleAddAssignment}
+				onAddAssignment={createAssignment}
+				isLoading={isCreating}
 			/>
 		</div>
 	);

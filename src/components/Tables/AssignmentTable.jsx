@@ -35,14 +35,18 @@ const AssignmentTable = ({ classId }) => {
 				<table className="table-auto border-collapse border border-gray-300 w-full text-left text-sm">
 					<thead>
 						<tr>
+							<th className="border border-gray-300 px-4 py-2">Serial</th>
 							<th className="border border-gray-300 px-4 py-2">Title</th>
 							<th className="border border-gray-300 px-4 py-2">Description</th>
 							<th className="border border-gray-300 px-4 py-2">Deadline</th>
 						</tr>
 					</thead>
 					<tbody>
-						{assignments.map((assignment) => (
+						{assignments.map((assignment, index) => (
 							<tr key={assignment.id}>
+								<td className="border border-gray-300 px-4 py-2">
+									{index + 1}
+								</td>
 								<td className="border border-gray-300 px-4 py-2">
 									{assignment.title}
 								</td>
