@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
+import PropTypes from 'prop-types';
 import { useAxios } from '../../hooks';
 import { formatInGlobalDate } from '../../utils/date-utils';
 
@@ -70,5 +71,8 @@ const AssignmentTable = ({ classId }) => {
 			)}
 		</div>
 	);
+};
+AssignmentTable.propTypes = {
+	classId: PropTypes.string.isRequired,
 };
 export default AssignmentTable;

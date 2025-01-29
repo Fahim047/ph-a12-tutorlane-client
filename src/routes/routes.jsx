@@ -5,6 +5,7 @@ import About from '../pages/About';
 import AllClassesPage from '../pages/classes/AllClassesPage';
 import AdminAllClasses from '../pages/dashboard/admin/AdminAllClasses';
 import AdminProfile from '../pages/dashboard/admin/AdminProfile';
+import ClassProgress from '../pages/dashboard/admin/ClassProgress';
 import TeacherRequests from '../pages/dashboard/admin/TeacherRequests';
 import Users from '../pages/dashboard/admin/Users';
 import EnrollClassDetails from '../pages/dashboard/student/EnrollClassDetails';
@@ -157,6 +158,15 @@ const router = createBrowserRouter([
 						),
 					},
 					{
+						path: 'all-classes/:id',
+						element: (
+							<AdminRoutes>
+								<ClassProgress />
+							</AdminRoutes>
+						),
+					},
+					{
+						path: 'profile',
 						index: true,
 						element: (
 							<AdminRoutes>
@@ -165,7 +175,7 @@ const router = createBrowserRouter([
 						),
 					},
 					{
-						path: 'profile',
+						path: '',
 						index: true,
 						element: (
 							<AdminRoutes>

@@ -1,13 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import LoadingComponent from '../../../components/shared/LoadingComponent';
 import { useAxios } from '../../../hooks';
 
-const handleViewProgress = (id) => {
-	toast.warning('Not implemented yet');
-};
-
 const AllClassesPage = () => {
+	const navigate = useNavigate();
 	const { axiosSecure } = useAxios();
 	const queryClient = useQueryClient();
 
@@ -146,7 +144,9 @@ const AllClassesPage = () => {
 								{/* Progress */}
 								<td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
 									<button
-										onClick={() => handleViewProgress(cls.id)}
+										onClick={() =>
+											navigate(`/dashboard/admin/all-classes/${cls.id}`)
+										}
 										disabled={cls.status !== 'approved'}
 										className={`w-full px-4 py-2 rounded-lg font-medium ${
 											cls.status === 'approved'

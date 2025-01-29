@@ -1,33 +1,3 @@
-export const classes = [
-	{
-		id: 1,
-		title: 'Introduction to Web Development',
-		description: 'Learn the basics of HTML, CSS, and JavaScript.',
-		image: 'https://placehold.co/400x300',
-		enrollments: 1200,
-	},
-	{
-		id: 2,
-		title: 'Advanced Python Programming',
-		description: 'Master advanced concepts in Python programming.',
-		image: 'https://placehold.co/400x300',
-		enrollments: 950,
-	},
-	{
-		id: 3,
-		title: 'Graphic Design Essentials',
-		description: 'Become proficient in Adobe Photoshop and Illustrator.',
-		image: 'https://placehold.co/400x300',
-		enrollments: 870,
-	},
-	{
-		id: 4,
-		title: 'Data Science with R',
-		description: 'Analyze data and build models using R programming.',
-		image: 'https://placehold.co/400x300',
-		enrollments: 820,
-	},
-];
 export const feedbacks = [
 	{
 		id: 1,
@@ -72,88 +42,7 @@ export const feedbacks = [
 		title: 'Data Science Essentials',
 	},
 ];
-export const stats = {
-	totalUsers: 1234,
-	totalClasses: 567,
-	totalEnrollments: 890,
-};
-export const allClasses = [
-	{
-		id: 1,
-		title: 'Advanced JavaScript',
-		name: 'John Doe',
-		image: 'https://placehold.co/300x200',
-		price: 50,
-		description:
-			'Deep dive into JavaScript concepts such as closures, promises, and async/await.',
-		totalEnrollment: 120,
-	},
-	{
-		id: 2,
-		title: 'Python for Beginners',
-		name: 'Jane Smith',
-		image: 'https://placehold.co/300x200',
-		price: 40,
-		description:
-			'Learn Python programming from scratch and build real-world projects.',
-		totalEnrollment: 85,
-	},
-	{
-		id: 3,
-		title: 'React Masterclass',
-		name: 'Alice Brown',
-		image: 'https://placehold.co/300x200',
-		price: 70,
-		description:
-			'Master React.js and build dynamic, responsive web applications.',
-		totalEnrollment: 150,
-	},
-	{
-		id: 3,
-		title: 'React Masterclass',
-		name: 'Alice Brown',
-		image: 'https://placehold.co/300x200',
-		price: 70,
-		description:
-			'Master React.js and build dynamic, responsive web applications.',
-		totalEnrollment: 150,
-	},
-];
 
-export const enrolledClasses = [
-	{
-		id: '1',
-		title: 'Introduction to Python',
-		teacherName: 'John Doe',
-		image: 'https://placehold.co/400x300',
-	},
-	{
-		id: '2',
-		title: 'Web Development Basics',
-		teacherName: 'Jane Smith',
-		image: 'https://placehold.co/400x300',
-	},
-	{
-		id: '3',
-		title: 'Data Science Fundamentals',
-		teacherName: 'Alan Turing',
-		image: 'https://placehold.co/400x300',
-	},
-];
-export const assignments = [
-	{
-		id: '1',
-		title: 'Assignment 1',
-		description: 'Solve problems 1-10 in the textbook.',
-		deadline: '2025-01-31',
-	},
-	{
-		id: '2',
-		title: 'Assignment 2',
-		description: 'Write an essay on environmental conservation.',
-		deadline: '2025-02-10',
-	},
-];
 export const partners = [
 	{
 		id: 1,
@@ -170,7 +59,7 @@ export const partners = [
 	{
 		id: 3,
 		name: 'IBM',
-		image: 'max-w-7xl mx-auto',
+		image: 'https://www.react-fast-marquee.com/static/media/ibm.bcec6b9a.png',
 	},
 	{
 		id: 4,

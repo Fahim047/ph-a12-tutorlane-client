@@ -18,7 +18,6 @@ const PopularClasses = () => {
 	if (isPending) {
 		return <LoadingComponent />;
 	}
-	console.log(classes);
 	return (
 		<section className="w-full bg-neutral dark:bg-gray-900 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +38,6 @@ const PopularClasses = () => {
 						768: { slidesPerView: 2, grid: { rows: 1 } },
 						1024: { slidesPerView: 3, grid: { rows: 1 } },
 					}}
-					className="h-[400px]"
 				>
 					{classes.map((course) => (
 						<SwiperSlide key={course.id} className="h-auto">
