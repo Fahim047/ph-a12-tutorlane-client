@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -65,16 +66,17 @@ const MyClassDetails = () => {
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
 				{classDetails.title}
 			</h1>
-			<ClassStats stats={classDetails} />
-			<AssignmentTable classId={id} />
-			<div className="mt-6">
+			<div className="mb-6 flex justify-end">
 				<button
 					onClick={toggleModal}
-					className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+					className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
 				>
+					<PlusIcon className="w-4 h-4 mr-2" />
 					Create Assignment
 				</button>
 			</div>
+			<ClassStats stats={classDetails} />
+			<AssignmentTable classId={id} />
 			<AssignmentModal
 				isOpen={isModalOpen}
 				onClose={toggleModal}

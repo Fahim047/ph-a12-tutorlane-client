@@ -31,30 +31,39 @@ const AssignmentTable = ({ classId }) => {
 			<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
 				Class Assignments
 			</h2>
-			<table className="table-auto border-collapse border border-gray-300 w-full text-left text-sm">
-				<thead>
-					<tr>
-						<th className="border border-gray-300 px-4 py-2">Title</th>
-						<th className="border border-gray-300 px-4 py-2">Description</th>
-						<th className="border border-gray-300 px-4 py-2">Deadline</th>
-					</tr>
-				</thead>
-				<tbody>
-					{assignments.map((assignment) => (
-						<tr key={assignment.id}>
-							<td className="border border-gray-300 px-4 py-2">
-								{assignment.title}
-							</td>
-							<td className="border border-gray-300 px-4 py-2">
-								{assignment.description}
-							</td>
-							<td className="border border-gray-300 px-4 py-2">
-								{formatInGlobalDate(assignment.deadline)}
-							</td>
+			{assignments.length > 0 ? (
+				<table className="table-auto border-collapse border border-gray-300 w-full text-left text-sm">
+					<thead>
+						<tr>
+							<th className="border border-gray-300 px-4 py-2">Title</th>
+							<th className="border border-gray-300 px-4 py-2">Description</th>
+							<th className="border border-gray-300 px-4 py-2">Deadline</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{assignments.map((assignment) => (
+							<tr key={assignment.id}>
+								<td className="border border-gray-300 px-4 py-2">
+									{assignment.title}
+								</td>
+								<td className="border border-gray-300 px-4 py-2">
+									{assignment.description}
+								</td>
+								<td className="border border-gray-300 px-4 py-2">
+									{formatInGlobalDate(assignment.deadline)}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			) : (
+				<div
+					className="h-[100px] flex items-center
+				justify-center"
+				>
+					<p className="text-2xl">You didn&apos;t create any assignments yet</p>
+				</div>
+			)}
 		</div>
 	);
 };

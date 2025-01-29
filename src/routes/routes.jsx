@@ -97,7 +97,7 @@ const router = createBrowserRouter([
 						path: 'my-enroll-classes',
 						element: (
 							<StudentRoutes>
-								<MyEnrollClasses />,
+								<MyEnrollClasses />
 							</StudentRoutes>
 						),
 					},
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
 						path: 'my-enroll-classes/:id',
 						element: (
 							<StudentRoutes>
-								<EnrollClassDetails />,
+								<EnrollClassDetails />
 							</StudentRoutes>
 						),
 					},
@@ -113,7 +113,7 @@ const router = createBrowserRouter([
 						index: true,
 						element: (
 							<StudentRoutes>
-								<StudentProfile />,
+								<StudentProfile />
 							</StudentRoutes>
 						),
 					},
@@ -121,7 +121,7 @@ const router = createBrowserRouter([
 						path: 'profile',
 						element: (
 							<StudentRoutes>
-								<StudentProfile />,
+								<StudentProfile />
 							</StudentRoutes>
 						),
 					},
@@ -136,7 +136,7 @@ const router = createBrowserRouter([
 						path: 'teacher-requests',
 						element: (
 							<AdminRoutes>
-								<TeacherRequests />,
+								<TeacherRequests />
 							</AdminRoutes>
 						),
 					},
@@ -144,7 +144,7 @@ const router = createBrowserRouter([
 						path: 'users',
 						element: (
 							<AdminRoutes>
-								<Users />,
+								<Users />
 							</AdminRoutes>
 						),
 					},
@@ -160,7 +160,7 @@ const router = createBrowserRouter([
 						index: true,
 						element: (
 							<AdminRoutes>
-								<AdminProfile />,
+								<AdminProfile />
 							</AdminRoutes>
 						),
 					},
@@ -169,7 +169,7 @@ const router = createBrowserRouter([
 						index: true,
 						element: (
 							<AdminRoutes>
-								<AdminProfile />,
+								<AdminProfile />
 							</AdminRoutes>
 						),
 					},
@@ -184,7 +184,7 @@ const router = createBrowserRouter([
 						path: 'add-class',
 						element: (
 							<TeacherRoutes>
-								<AddClass />,
+								<AddClass />
 							</TeacherRoutes>
 						),
 					},
@@ -200,7 +200,7 @@ const router = createBrowserRouter([
 						path: 'my-classes/:id',
 						element: (
 							<TeacherRoutes>
-								<ClassDetails />,
+								<ClassDetails />
 							</TeacherRoutes>
 						),
 					},
@@ -208,7 +208,7 @@ const router = createBrowserRouter([
 						index: true,
 						element: (
 							<TeacherRoutes>
-								<TeacherProfile />,
+								<TeacherProfile />
 							</TeacherRoutes>
 						),
 					},
@@ -216,7 +216,7 @@ const router = createBrowserRouter([
 						path: 'profile',
 						element: (
 							<TeacherRoutes>
-								<TeacherProfile />,
+								<TeacherProfile />
 							</TeacherRoutes>
 						),
 					},
