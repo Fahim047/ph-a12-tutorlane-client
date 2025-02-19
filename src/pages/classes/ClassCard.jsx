@@ -13,7 +13,7 @@ const ClassCard = ({ classData }) => {
 	} = classData;
 
 	return (
-		<div className="bg-white dark:bg-gray-800 border shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+		<div className="bg-neutral dark:bg-gray-800 border shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
 			{/* Image */}
 			<div
 				className="w-full h-48 bg-cover bg-center"

@@ -52,7 +52,7 @@ const PopularClasses = () => {
 				>
 					{classes.map((course) => (
 						<SwiperSlide key={course.id} className="h-auto">
-							<div className="flex flex-col bg-white rounded-lg shadow-md h-full p-4">
+							<div className="flex flex-col bg-neutral rounded-lg shadow-md h-full p-4">
 								{/* Image Section */}
 								<div className="h-40 w-full mb-4">
 									<img

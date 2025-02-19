@@ -23,7 +23,7 @@ const AllClassesPage = () => {
 	}
 	if (classes.length === 0) {
 		return (
-			<div className="min-h-screen flex justify-center items-center bg-neutral dark:bg-gray-900 mt-12 py-12">
+			<div className="min-h-screen flex justify-center items-center mt-12 py-12">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<h1 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
 						No Classes Found!!!
@@ -33,7 +33,7 @@ const AllClassesPage = () => {
 		);
 	}
 	return (
-		<div className="min-h-screen bg-neutral dark:bg-gray-900 mt-12 py-12">
+		<div className="min-h-screen mt-12 py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<h1 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
 					{`All Classes (${classes.length})`}
