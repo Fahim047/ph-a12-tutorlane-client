@@ -18,6 +18,7 @@ const Navbar = () => {
 		{ label: 'Home', to: '/' },
 		{ label: 'All Classes', to: '/classes' },
 		{ label: 'Teach', to: '/teach' },
+		{ label: 'About', to: '/about' },
 	];
 
 	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
