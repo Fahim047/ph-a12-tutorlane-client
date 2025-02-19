@@ -56,7 +56,7 @@ const Footer = () => {
 
 			{/* Copyright */}
 			<div className="text-center text-gray-500 mt-6 border-t border-gray-700 pt-4">
-				&copy; {new Date().getFullYear()} EduPlatform. All rights reserved.
+				&copy; {new Date().getFullYear()} Tutor Lane. All rights reserved.
 			</div>
 		</footer>
 	);
