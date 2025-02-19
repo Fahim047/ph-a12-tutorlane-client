@@ -7,7 +7,7 @@ const Footer = () => {
 			<div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
 				{/* Logo & About */}
 				<div>
-					<h2 className="text-2xl font-bold">Tutor Lane</h2>
+					<h2 className="text-2xl font-bold text-primary">Tutor Lane</h2>
 					<p className="text-gray-400 mt-2">
 						Empowering learning through online tutoring.
 					</p>
@@ -15,7 +15,7 @@ const Footer = () => {
 
 				{/* Quick Links */}
 				<div>
-					<h3 className="text-lg font-semibold">Quick Links</h3>
+					<h3 className="text-lg font-semibold text-gray-500">Quick Links</h3>
 					<ul className="mt-2 space-y-2">
 						<li>
 							<Link to="/" className="hover:text-primary">
@@ -42,7 +42,7 @@ const Footer = () => {
 
 				{/* Social Media */}
 				<div>
-					<h3 className="text-lg font-semibold">Follow Us</h3>
+					<h3 className="text-lg font-semibold text-gray-500">Follow Us</h3>
 					<div className="flex space-x-4 mt-2">
 						<Link href="#" className="text-secondary hover:text-primary">
 							<Facebook />
