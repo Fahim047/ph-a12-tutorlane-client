@@ -1,5 +1,6 @@
 import { Loader2 } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
+import Footer from '../components/sections/Footer';
 import Navbar from '../components/shared/Navbar';
 import { useAuth, useTheme } from '../hooks';
 
@@ -17,6 +18,7 @@ const MainLayout = () => {
 		<div className={`h-full w-full ${darkMode ? 'dark' : ''}`}>
 			<Navbar />
 			<Outlet />
+			<Footer />
 		</div>
 	);
 };

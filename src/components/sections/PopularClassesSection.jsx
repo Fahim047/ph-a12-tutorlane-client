@@ -8,7 +8,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import axiosPublic from '../../api/axios';
 import LoadingComponent from '../shared/LoadingComponent';
 const PopularClasses = () => {
-	const { data: classes, isPending } = useQuery({
+	const {
+		data: classes,
+		isPending,
+		isError,
+	} = useQuery({
 		queryKey: ['popularClasses'],
 		queryFn: async () => {
 			const response = await axiosPublic.get(`/classes/popular`);
@@ -17,6 +21,13 @@ const PopularClasses = () => {
 	});
 	if (isPending) {
 		return <LoadingComponent />;
+	}
+	if (isError) {
+		return (
+			<p className="text-center mt-8 text-red-500">
+				Failed to load popular classes. Please try again later.
+			</p>
+		);
 	}
 	return (
 		<section className="w-full bg-neutral dark:bg-gray-900 py-12">
