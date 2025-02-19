@@ -3,6 +3,7 @@ import DashboardLayout from '../layouts/Dashboard';
 import MainLayout from '../layouts/MainLayout';
 import About from '../pages/about/About';
 import AllClassesPage from '../pages/classes/AllClassesPage';
+import ContactUs from '../pages/contact/ContactUs';
 import AdminAllClasses from '../pages/dashboard/admin/AdminAllClasses';
 import AdminProfile from '../pages/dashboard/admin/AdminProfile';
 import ClassProgress from '../pages/dashboard/admin/ClassProgress';
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
 			{
 				path: 'about',
 				element: <About />,
+			},
+			{
+				path: 'contact',
+				element: <ContactUs />,
 			},
 			{
 				path: '*',
