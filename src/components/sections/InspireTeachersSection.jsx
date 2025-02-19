@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const InspireTeachersSection = () => {
 	return (
-		<section className="bg-neutral dark:bg-gray-900 py-16">
+		<section className="py-16">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 				{/* Left Content */}
 				<div className="space-y-6">

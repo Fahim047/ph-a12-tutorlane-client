@@ -21,7 +21,7 @@ const StudentTestimonialsSection = () => {
 	];
 
 	return (
-		<section className="bg-neutral dark:bg-gray-900 py-16">
+		<section className="py-16">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<h2 className="text-4xl font-bold text-center text-darkText dark:text-white mb-8">
 					What Students Are Saying
@@ -30,7 +30,7 @@ const StudentTestimonialsSection = () => {
 					{testimonials.map((testimonial, index) => (
 						<div
 							key={index}
-							className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4"
+							className="bg-neutral dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4"
 						>
 							<div className="flex items-center space-x-4">
 								<img

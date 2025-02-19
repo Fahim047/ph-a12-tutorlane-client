@@ -6,7 +6,7 @@ import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 const FeedbackSection = ({ feedbacks }) => {
 	return (
-		<section className="w-full bg-neutral dark:bg-gray-900 py-12">
+		<section className="w-full py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<h2 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
 					What Teachers Are Saying
@@ -29,7 +29,7 @@ const FeedbackSection = ({ feedbacks }) => {
 				>
 					{feedbacks.map((feedback) => (
 						<SwiperSlide key={feedback.id}>
-							<div className="flex flex-col bg-white rounded-lg shadow-md p-6 h-full">
+							<div className="flex flex-col bg-neutral dark:bg-gray-800 rounded-lg shadow-md p-6 h-full">
 								{/* User Image */}
 								<div className="flex justify-center mb-4">
 									<img
@@ -43,7 +43,7 @@ const FeedbackSection = ({ feedbacks }) => {
 									<p className="text-subtleText italic mb-4">
 										{`"${feedback.text}"`}
 									</p>
-									<h3 className="text-lg font-bold text-darkText">
+									<h3 className="text-lg font-bold text-darkText dark:text-primary">
 										{feedback.name}
 									</h3>
 									<p className="text-sm text-subtleText">{feedback.title}</p>

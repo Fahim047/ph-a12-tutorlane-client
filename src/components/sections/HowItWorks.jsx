@@ -22,7 +22,7 @@ const HowItWorksSection = () => {
 	];
 
 	return (
-		<section className="bg-white dark:bg-gray-900 py-16">
+		<section className="py-16">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 				<h2 className="text-4xl font-bold text-darkText dark:text-white mb-8">
 					How It Works

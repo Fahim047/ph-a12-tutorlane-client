@@ -20,12 +20,12 @@ const StatsSection = () => {
 	const { totalUsers = 0, totalClasses = 0, totalEnrollments = 0 } = data || {};
 
 	return (
-		<section className="w-full py-12 bg-neutral dark:bg-gray-900">
+		<section className="w-full py-12">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 				{/* Left: Stats Cards */}
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
 					{/* Total Users */}
-					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-neutral dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary">
 							{totalUsers}
 						</h3>
@@ -35,7 +35,7 @@ const StatsSection = () => {
 					</div>
 
 					{/* Total Classes */}
-					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-neutral dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary">
 							{totalClasses}
 						</h3>
@@ -45,7 +45,7 @@ const StatsSection = () => {
 					</div>
 
 					{/* Total Enrollments */}
-					<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+					<div className="bg-neutral dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center">
 						<h3 className="text-2xl font-semibold text-primary">
 							{totalEnrollments}
 						</h3>

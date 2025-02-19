@@ -20,7 +20,7 @@ const AchievementsSection = () => {
 	];
 
 	return (
-		<section className="bg-neutral dark:bg-gray-900 py-16">
+		<section className="py-16">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 				<h2 className="text-4xl font-bold text-darkText dark:text-white mb-8">
 					Our Achievements
@@ -29,7 +29,7 @@ const AchievementsSection = () => {
 					{achievements.map((achievement, index) => (
 						<div
 							key={index}
-							className="flex flex-col items-center space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
+							className="flex flex-col items-center space-y-4 bg-neutral dark:bg-gray-800 p-6 rounded-lg shadow-lg"
 						>
 							<div className="p-4 bg-primary/10 dark:bg-secondary/10 rounded-full">
 								{achievement.icon}
