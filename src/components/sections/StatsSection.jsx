@@ -4,21 +4,21 @@ import axiosPublic from '../../api/axios';
 import LoadingComponent from '../shared/LoadingComponent';
 
 const StatsSection = () => {
-	const { data, isPending } = useQuery({
+	const { data, isPending, isError } = useQuery({
 		queryKey: ['websiteStats'],
 		queryFn: async () => {
-			console.log('Fetching website stats...');
 			const response = await axiosPublic.get('/users/website-stats');
-
 			return response.data;
 		},
+		retry: 1,
 	});
 
 	if (isPending) {
 		return <LoadingComponent />;
 	}
 
-	const { totalUsers, totalClasses, totalEnrollments } = data;
+	const { totalUsers = 0, totalClasses = 0, totalEnrollments = 0 } = data || {};
+
 	return (
 		<section className="w-full py-12 bg-neutral dark:bg-gray-900">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
