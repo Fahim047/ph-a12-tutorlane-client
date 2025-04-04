@@ -30,12 +30,11 @@ const Navbar = () => {
 		setDarkMode((prev) => !prev);
 	};
 
-	const linkClasses = (isActive) =>
-		`px-4 py-2 rounded text-sm font-medium transition-colors ${
-			isActive
-				? 'text-primary bg-gray-800'
-				: 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary'
+	const linkClasses = ({ isActive }) =>
+		`px-3 py-2 rounded text-sm font-medium transition-colors ${
+			isActive ? 'text-primary' : 'text-gray-700 dark:text-gray-300'
 		}`;
+
 	const logout = async () => {
 		await handleLogout();
 		navigate('/');
@@ -59,12 +58,12 @@ const Navbar = () => {
 					</NavLink>
 
 					{/* Desktop Navigation */}
-					<div className="hidden md:flex md:space-x-8 items-center">
+					<div className="hidden md:flex md:space-x-6 items-center">
 						{navItems.map((item) => (
 							<NavLink
 								key={item.label}
 								to={item.to}
-								className={({ isActive }) => linkClasses(isActive)}
+								className={linkClasses} // directly apply linkClasses
 							>
 								{item.label}
 							</NavLink>
@@ -97,13 +96,13 @@ const Navbar = () => {
 								{/* Profile Dropdown */}
 								{isProfileDropdownOpen && (
 									<div
-										className={`absolute right-0 mt-2 w-48 bg-${
-											darkMode ? 'gray-800' : 'white'
+										className={`absolute right-0 mt-2 w-48 ${
+											darkMode ? 'bg-gray-800' : 'bg-white'
 										} rounded shadow-lg`}
 									>
 										<div
-											className={`p-4 text-sm font-medium border-b border-${
-												darkMode ? 'gray-600' : 'gray-300'
+											className={`p-4 text-sm font-medium border-b ${
+												darkMode ? 'border-gray-600' : 'border-gray-300'
 											}`}
 										>
 											{user?.displayName}
@@ -160,7 +159,7 @@ const Navbar = () => {
 							<NavLink
 								key={item.label}
 								to={item.to}
-								className={({ isActive }) => linkClasses(isActive)}
+								className={linkClasses} // directly apply linkClasses
 								onClick={toggleMenu}
 							>
 								{item.label}

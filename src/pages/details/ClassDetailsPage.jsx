@@ -2,8 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosPublic from '../../api/axios';
 import LoadingComponent from '../../components/shared/LoadingComponent';
+import { useTheme } from '../../hooks';
 
 const ClassDetailsPage = () => {
+	const { darkMode } = useTheme();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const {
@@ -35,7 +37,9 @@ const ClassDetailsPage = () => {
 	};
 
 	return (
-		<div className="mt-20 max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+		<div
+			className={`max-w-4xl mx-auto mt-12 px-4 py-12 ${darkMode ? 'dark' : ''}`}
+		>
 			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
 				{classDetails.title}
 			</h1>
@@ -65,7 +69,7 @@ const ClassDetailsPage = () => {
 			<div className="mt-6">
 				<button
 					onClick={handlePay}
-					className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600"
+					className="w-full px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/80 transition-colors duration-300"
 				>
 					Pay Now
 				</button>

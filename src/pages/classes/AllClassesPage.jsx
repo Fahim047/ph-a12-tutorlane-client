@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosPublic from '../../api/axios';
 import LoadingComponent from '../../components/shared/LoadingComponent';
+import { useTheme } from '../../hooks';
 import ErrorPage from '../ErrorPage';
 import ClassCard from './ClassCard';
 const AllClassesPage = () => {
+	const { darkMode } = useTheme();
 	const {
 		data: classes,
 		isPending,
@@ -23,7 +25,11 @@ const AllClassesPage = () => {
 	}
 	if (classes.length === 0) {
 		return (
-			<div className="min-h-screen flex justify-center items-center mt-12 py-12">
+			<div
+				className={`min-h-screen flex justify-center items-center mt-12 py-12 ${
+					darkMode ? 'dark' : ''
+				}`}
+			>
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<h1 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
 						No Classes Found!!!

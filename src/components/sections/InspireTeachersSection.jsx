@@ -4,7 +4,15 @@ const InspireTeachersSection = () => {
 	return (
 		<section className="py-16">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-				{/* Left Content */}
+				{/* Left Image */}
+				<div className="flex justify-center rounded-lg">
+					<img
+						src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfHwwfHx8MA%3D%3D"
+						alt="Inspiring teachers"
+						className="w-full max-w-lg rounded-lg object-scale-down overflow-hidden bg-center"
+					/>
+				</div>
+				{/* Right Content */}
 				<div className="space-y-6">
 					<h2 className="text-4xl font-bold text-darkText dark:text-white leading-tight">
 						Empower Students, Share Knowledge
@@ -43,19 +51,10 @@ const InspireTeachersSection = () => {
 					</ul>
 					<Link
 						to="/teach"
-						className="inline-block px-6 py-3 bg-primary dark:bg-secondary text-white rounded-md shadow-lg hover:bg-primary/90 transition"
+						className="inline-block px-6 py-3 bg-primary text-white rounded-md shadow-lg hover:bg-primary/90 transition"
 					>
 						Become a Teacher
 					</Link>
-				</div>
-
-				{/* Right Image */}
-				<div className="flex justify-center">
-					<img
-						src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-						alt="Inspiring teachers"
-						className="w-full h-[450px] max-w-lg rounded-lg shadow-lg object-scale-down overflow-hidden bg-center"
-					/>
 				</div>
 			</div>
 		</section>

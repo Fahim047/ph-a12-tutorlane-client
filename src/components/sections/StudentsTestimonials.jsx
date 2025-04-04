@@ -39,10 +39,8 @@ const StudentTestimonialsSection = () => {
 									className="w-12 h-12 rounded-full"
 								/>
 								<div>
-									<p className="text-lg font-semibold text-darkText dark:text-white">
-										{testimonial.name}
-									</p>
-									<p className="text-sm text-subtleText">{testimonial.title}</p>
+									<p className="text-lg font-bold">{testimonial.name}</p>
+									<p className="text-sm text-gray-1">{testimonial.title}</p>
 								</div>
 							</div>
 							<p className="text-darkText dark:text-gray-300">

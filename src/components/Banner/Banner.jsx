@@ -17,14 +17,14 @@ const Banner = () => {
 
 			{/* Content */}
 			<div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
-				<h1 className="text-5xl sm:text-6xl font-extrabold text-white mb-6">
+				<h1 className="text-5xl sm:text-7xl font-extrabold text-white mb-6">
 					Welcome to TutorLane
 				</h1>
 				<p className="text-lg sm:text-xl text-white/90 mb-8">
 					Empowering education through collaboration. Join us now!
 				</p>
 				<Link
-					to="/explore"
+					to="/classes"
 					className="inline-block px-8 py-4 bg-primary text-white font-medium rounded-md shadow-lg hover:opacity-90 transition-opacity"
 				>
 					Explore Now
