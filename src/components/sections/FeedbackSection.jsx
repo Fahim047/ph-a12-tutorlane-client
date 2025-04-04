@@ -40,13 +40,13 @@ const FeedbackSection = ({ feedbacks }) => {
 								</div>
 								{/* Feedback Content */}
 								<div className="text-center">
-									<p className="text-subtleText italic mb-4">
+									<p className="text-gray-1 italic mb-4">
 										{`"${feedback.text}"`}
 									</p>
-									<h3 className="text-lg font-bold text-darkText dark:text-primary">
+									<h3 className="text-xl font-bold dark:text-primary">
 										{feedback.name}
 									</h3>
-									<p className="text-sm text-subtleText">{feedback.title}</p>
+									<p>{feedback.title}</p>
 								</div>
 							</div>
 						</SwiperSlide>

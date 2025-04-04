@@ -52,21 +52,22 @@ const PopularClasses = () => {
 				>
 					{classes.map((course) => (
 						<SwiperSlide key={course.id} className="h-auto">
-							<div className="flex flex-col bg-neutral rounded-lg shadow-md h-full p-4">
+							<div className="flex flex-col dark:bg-gray-800 rounded-lg shadow-md h-full p-4">
 								{/* Image Section */}
 								<div className="h-40 w-full mb-4">
 									<img
-										src={course.thumbnail}
+										src={
+											course.thumbnail ||
+											'https://placehold.co/600x400?text=No+Image'
+										}
 										alt={course.title}
 										className="w-full h-full object-cover rounded-md"
 									/>
 								</div>
 								{/* Content Section */}
 								<div className="flex flex-col flex-grow">
-									<h3 className="text-xl font-semibold text-darkText mb-2">
-										{course.title}
-									</h3>
-									<p className="text-subtleText mb-4 flex-grow">
+									<h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+									<p className="text-gray-1 mb-4 flex-grow">
 										{course.description}
 									</p>
 									{/* Button Section */}
