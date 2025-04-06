@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosPublic from '../../api/axios';
 import LoadingComponent from '../../components/shared/LoadingComponent';
-import { useTheme } from '../../hooks';
 import ErrorPage from '../ErrorPage';
 import ClassCard from './ClassCard';
+
 const AllClassesPage = () => {
-	const { darkMode } = useTheme();
 	const {
 		data: classes,
 		isPending,
@@ -17,38 +16,42 @@ const AllClassesPage = () => {
 			return response.data;
 		},
 	});
-	if (isPending) {
-		return <LoadingComponent />;
-	}
-	if (isError) {
-		return <ErrorPage />;
-	}
-	if (classes.length === 0) {
+
+	if (isPending) return <LoadingComponent />;
+	if (isError) return <ErrorPage />;
+
+	if (!classes || classes.length === 0) {
 		return (
-			<div
-				className={`min-h-screen flex justify-center items-center mt-12 py-12 ${
-					darkMode ? 'dark' : ''
-				}`}
-			>
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<h1 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
-						No Classes Found!!!
-					</h1>
-				</div>
+			<div className="min-h-[60vh] flex flex-col justify-center items-center text-center px-4">
+				<h1 className="text-3xl md:text-4xl font-semibold text-gray-700 dark:text-white">
+					No Classes Found
+				</h1>
+				<p className="mt-2 text-gray-500 dark:text-gray-400">
+					Check back later or contact support for more info.
+				</p>
 			</div>
 		);
 	}
+
 	return (
-		<div className="min-h-screen mt-12 py-12">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<h1 className="text-4xl font-bold text-darkText dark:text-white text-center mb-8">
-					{`All Classes (${classes.length})`}
+		<div className="mt-12 px-6 py-16 max-w-7xl mx-auto">
+			{/* Page Heading */}
+			<div className="text-center mb-12">
+				<h1 className="text-4xl font-extrabold text-primary">
+					Explore All Classes
 				</h1>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-					{classes.map((classItem) => (
-						<ClassCard key={classItem.id} classData={classItem} />
-					))}
-				</div>
+				<p className="mt-2 text-gray-600 dark:text-gray-400">
+					Currently showing{' '}
+					<span className="font-semibold">{classes.length}</span> available
+					classes
+				</p>
+			</div>
+
+			{/* Classes Grid */}
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+				{classes.map((classItem) => (
+					<ClassCard key={classItem.id} classData={classItem} />
+				))}
 			</div>
 		</div>
 	);
